@@ -20,7 +20,7 @@ jobs:
           mkdir -p /tmp/entre-godot
           cp -L "$(command -v godot)" /tmp/entre-godot/godot
           chmod +x /tmp/entre-godot/godot
-          file /tmp/entre-godot/godot
+          ls -lh /tmp/entre-godot/godot
           ldd /tmp/entre-godot/godot || true
       - name: Upload Godot executable
         uses: actions/upload-artifact@v4
