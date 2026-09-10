@@ -9,8 +9,6 @@ on:
 jobs:
   package-source:
     runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:4.5.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,8 +19,6 @@ jobs:
           set -euo pipefail
           base64 -d .release/v1.0.patch.gz.b64 | gzip -d > /tmp/v1.0.patch
           echo '57cc6fc17fec0a6c06f226bfba9c3233590e31c61ea0767d1a713f617b82efb4  /tmp/v1.0.patch' | sha256sum -c -
-          # The GitHub branch does not contain the test files that are present in the author's source ZIP.
-          # Apply every production/doc/versioning change, leaving test hunks in the separate patch file below.
           git apply --exclude='godot/tests/*' --check /tmp/v1.0.patch
           git apply --exclude='godot/tests/*' /tmp/v1.0.patch
           grep -q 'version/name="1.0"' godot/export_presets.cfg
@@ -42,16 +38,16 @@ jobs:
           rm -rf /tmp/package/Entre_Margens_v1.0/godot/.godot
           rm -f /tmp/package/Entre_Margens_v1.0/development/android-debug.keystore
           cp /tmp/v1.0.patch /tmp/package/V1_0_CHANGES_COMPLETE.patch
-          cat > /tmp/package/README_CLAUDE.txt <<'EOF'
-ENTRE MARGENS v1.0 — PACOTE DE DIAGNOSTICO
-
-- Entre_Margens_v1.0/: codigo de producao da v1.0 com o overlay aplicado.
-- V1_0_CHANGES_COMPLETE.patch: patch completo, incluindo mudancas de testes.
-- A chave privada de assinatura Android foi removida intencionalmente deste pacote.
-- O ZIP-fonte original do autor contem os testes que nao estavam commitados na branch do GitHub.
-EOF
+          printf '%s\n' \
+            'ENTRE MARGENS v1.0 — PACOTE DE DIAGNOSTICO' \
+            '' \
+            '- Entre_Margens_v1.0/: codigo de producao da v1.0 com o overlay aplicado.' \
+            '- V1_0_CHANGES_COMPLETE.patch: patch completo, incluindo mudancas de testes.' \
+            '- A chave privada de assinatura Android foi removida intencionalmente deste pacote.' \
+            '- O ZIP-fonte original do autor contem os testes que nao estavam commitados na branch do GitHub.' \
+            > /tmp/package/README_CLAUDE.txt
           cd /tmp/package
-          jar --create --file Entre_Margens_v1.0_Fonte_Claude.zip Entre_Margens_v1.0 V1_0_CHANGES_COMPLETE.patch README_CLAUDE.txt
+          zip -qr Entre_Margens_v1.0_Fonte_Claude.zip Entre_Margens_v1.0 V1_0_CHANGES_COMPLETE.patch README_CLAUDE.txt
           ls -lh Entre_Margens_v1.0_Fonte_Claude.zip
 
       - name: Upload source package
