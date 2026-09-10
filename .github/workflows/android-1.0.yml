@@ -1,0 +1,55 @@
+name: Entre Margens Android 1.0
+
+on:
+  push:
+    branches:
+      - release/1.0-apk
+  workflow_dispatch:
+
+jobs:
+  export-android:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.5.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Android debug signing
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p development build/android
+          keytool -genkeypair \
+            -keystore development/android-debug.keystore \
+            -alias androiddebugkey \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass android \
+            -keypass android \
+            -dname "CN=Android Debug,O=Entre Margens,C=BR"
+
+      - name: Verify Godot
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --version
+          test -f godot/project.godot
+          test -f godot/export_presets.cfg
+
+      - name: Export APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --path godot --export-debug "Android APK" "$GITHUB_WORKSPACE/build/android/Entre_Margens_Android_1.0.apk"
+          test -s "$GITHUB_WORKSPACE/build/android/Entre_Margens_Android_1.0.apk"
+          ls -lh "$GITHUB_WORKSPACE/build/android/Entre_Margens_Android_1.0.apk"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Entre_Margens_Android_1.0
+          path: build/android/Entre_Margens_Android_1.0.apk
+          if-no-files-found: error
+          compression-level: 0
