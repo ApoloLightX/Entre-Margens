@@ -12,20 +12,28 @@ jobs:
     container:
       image: barichello/godot-ci:4.5.1
     steps:
-      - name: Package Godot executable
+      - name: Package Android toolchain
         shell: bash
         run: |
           set -euo pipefail
           godot --version
-          mkdir -p /tmp/entre-godot
-          cp -L "$(command -v godot)" /tmp/entre-godot/godot
-          chmod +x /tmp/entre-godot/godot
-          ls -lh /tmp/entre-godot/godot
-          ldd /tmp/entre-godot/godot || true
-      - name: Upload Godot executable
+          mkdir -p /tmp/entre-toolchain/android-sdk/build-tools /tmp/entre-toolchain/templates
+          BUILD_TOOLS="$(find /usr/lib/android-sdk/build-tools -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
+          cp -a "$BUILD_TOOLS" /tmp/entre-toolchain/android-sdk/build-tools/
+          if [ -d /usr/lib/android-sdk/platform-tools ]; then cp -a /usr/lib/android-sdk/platform-tools /tmp/entre-toolchain/android-sdk/; fi
+          if [ -d /usr/lib/android-sdk/cmdline-tools ]; then cp -a /usr/lib/android-sdk/cmdline-tools /tmp/entre-toolchain/android-sdk/; fi
+          if [ -d /usr/lib/android-sdk/platforms ]; then cp -a /usr/lib/android-sdk/platforms /tmp/entre-toolchain/android-sdk/; fi
+          cp -a /root/.local/share/godot/export_templates/4.5.1.stable/android_debug.apk /tmp/entre-toolchain/templates/
+          cp -a /root/.local/share/godot/export_templates/4.5.1.stable/android_release.apk /tmp/entre-toolchain/templates/
+          tar -C /usr/lib/jvm -cf /tmp/entre-toolchain/jdk17.tar java-17-openjdk-amd64
+          tar -C /tmp/entre-toolchain -cf /tmp/android-toolchain.tar android-sdk templates jdk17.tar
+          ls -lh /tmp/android-toolchain.tar
+          du -sh /tmp/entre-toolchain/android-sdk /tmp/entre-toolchain/templates /usr/lib/jvm/java-17-openjdk-amd64
+
+      - name: Upload Android toolchain
         uses: actions/upload-artifact@v4
         with:
-          name: godot-4.5.1-linux-x86_64
-          path: /tmp/entre-godot/godot
+          name: entre-margens-android-toolchain-4.5.1
+          path: /tmp/android-toolchain.tar
           compression-level: 0
           if-no-files-found: error
