@@ -1,0 +1,31 @@
+name: Export Godot 4.5.1 runner
+
+on:
+  push:
+    branches:
+      - release/1.0-apk
+  workflow_dispatch:
+
+jobs:
+  export-runner:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.5.1
+    steps:
+      - name: Package Godot executable
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --version
+          mkdir -p /tmp/entre-godot
+          cp -L "$(command -v godot)" /tmp/entre-godot/godot
+          chmod +x /tmp/entre-godot/godot
+          file /tmp/entre-godot/godot
+          ldd /tmp/entre-godot/godot || true
+      - name: Upload Godot executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot-4.5.1-linux-x86_64
+          path: /tmp/entre-godot/godot
+          compression-level: 0
+          if-no-files-found: error
