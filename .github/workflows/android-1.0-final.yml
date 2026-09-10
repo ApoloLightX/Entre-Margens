@@ -1,0 +1,109 @@
+name: Entre Margens Android 1.0 final
+
+on:
+  push:
+    branches:
+      - release/1.0-final
+  workflow_dispatch:
+
+jobs:
+  verify-and-export:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.5.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply verified v1.0 source overlay
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 -d .release/v1.0.patch.gz.b64 | gzip -d > /tmp/v1.0.patch
+          echo '57cc6fc17fec0a6c06f226bfba9c3233590e31c61ea0767d1a713f617b82efb4  /tmp/v1.0.patch' | sha256sum -c -
+          git apply --check /tmp/v1.0.patch
+          git apply /tmp/v1.0.patch
+          grep -q 'version/name="1.0"' godot/export_presets.cfg
+          grep -q 'version/code=8' godot/export_presets.cfg
+          grep -q '"contrapeso"' godot/data/action/combat.json
+          test -f docs/14_POLIMENTO_100.md
+
+      - name: Prepare Godot Android environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p development build/android
+          mkdir -p "$HOME/.local/share/godot/export_templates/4.5.1.stable"
+          mkdir -p "$HOME/.config"
+          cp -a /root/.local/share/godot/export_templates/4.5.1.stable/. "$HOME/.local/share/godot/export_templates/4.5.1.stable/"
+          if [ -d /root/.config/godot ]; then cp -a /root/.config/godot "$HOME/.config/"; fi
+          mkdir -p "$HOME/.config/godot"
+          SETTINGS="$HOME/.config/godot/editor_settings-4.5.tres"
+          touch "$SETTINGS"
+          if grep -q '^export/android/java_sdk_path' "$SETTINGS"; then
+            sed -i 's|^export/android/java_sdk_path.*|export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64"|' "$SETTINGS"
+          else
+            echo 'export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64"' >> "$SETTINGS"
+          fi
+          if grep -q '^export/android/android_sdk_path' "$SETTINGS"; then
+            sed -i 's|^export/android/android_sdk_path.*|export/android/android_sdk_path = "/usr/lib/android-sdk"|' "$SETTINGS"
+          else
+            echo 'export/android/android_sdk_path = "/usr/lib/android-sdk"' >> "$SETTINGS"
+          fi
+          keytool -genkeypair \
+            -keystore development/android-debug.keystore \
+            -alias androiddebugkey \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass android -keypass android \
+            -dname "CN=Temporary Build,O=Entre Margens,C=BR"
+
+      - name: Import project
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --version
+          godot --headless --editor --path godot --quit
+
+      - name: Run full suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          for t in tests/run_tests.gd tests/test_action.gd tests/test_action_draw.gd tests/test_mobile_ui.gd tests/test_polish.gd tests/test_presentation.gd; do
+            echo "===== $t ====="
+            godot --headless --path godot -s "$t"
+          done
+
+      - name: Export APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --path godot --export-debug "Android APK" "$GITHUB_WORKSPACE/build/android/Entre_Margens_Android_1.0.temp.apk"
+          test -s "$GITHUB_WORKSPACE/build/android/Entre_Margens_Android_1.0.temp.apk"
+          ls -lh "$GITHUB_WORKSPACE/build/android/Entre_Margens_Android_1.0.temp.apk"
+
+      - name: Package Android signing tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          BUILD_TOOLS="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
+          test -x "$BUILD_TOOLS/zipalign"
+          test -f "$BUILD_TOOLS/apksigner"
+          mkdir -p build/signing-tools
+          cp -a "$BUILD_TOOLS/." build/signing-tools/
+          echo "$BUILD_TOOLS"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Entre_Margens_Android_1.0_temp
+          path: build/android/Entre_Margens_Android_1.0.temp.apk
+          if-no-files-found: error
+          compression-level: 0
+
+      - name: Upload Android signing tools
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build-tools
+          path: build/signing-tools
+          if-no-files-found: error
+          compression-level: 0
