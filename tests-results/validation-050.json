@@ -1,0 +1,25 @@
+{
+  "version": "0.5.0",
+  "package": "com.entremargens.prototype",
+  "versionCode": 5,
+  "tests": {
+    "action": 218,
+    "presentation": 78,
+    "failures": 0,
+    "graphical_draw_callbacks": 54
+  },
+  "apk_size_bytes": 61247291,
+  "apk_sha256": "ea23db348ba1f232270e87016b08c224918d21d4134d60a73de52499b2453743",
+  "original_certificate_matches": true,
+  "signature_v2": true,
+  "signature_v3": true,
+  "zipalign_P16_4": true,
+  "android_physical_test": false,
+  "human_duration_measured": false,
+  "graphical_capture": "Godot 4.5.1 Linux, Compatibility renderer, scripted scenes, 960x540, 20 seconds",
+  "warnings": [
+    "Mesa/Xvfb did not support changing vsync mode.",
+    "ADB had no connected device; APK export and signature verification succeeded.",
+    "aapt2 reports a missing unused themed_icon resource from the Godot template; main launcher icon is present. Device launcher behavior remains untested."
+  ]
+}
