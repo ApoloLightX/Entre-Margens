@@ -1,0 +1,66 @@
+{
+  "player": {
+    "speed": 190,
+    "health": 120,
+    "focus": 100,
+    "attack": 18,
+    "attack_cooldown": 0.43,
+    "dodge_cooldown": 1.1,
+    "dodge_duration": 0.25,
+    "dodge_speed": 610
+  },
+  "enemies": {
+    "crawler": {
+      "health": 62,
+      "speed": 98,
+      "reach": 62,
+      "damage": 12,
+      "windup": 0.62,
+      "recovery": 1.0,
+      "tile": 12
+    },
+    "ranged": {
+      "health": 54,
+      "speed": 65,
+      "reach": 350,
+      "damage": 11,
+      "windup": 1.0,
+      "recovery": 1.35,
+      "tile": 13
+    },
+    "shield": {
+      "health": 108,
+      "speed": 69,
+      "reach": 94,
+      "damage": 19,
+      "windup": 1.05,
+      "recovery": 1.6,
+      "tile": 14
+    },
+    "boss": {
+      "health": 1080,
+      "speed": 48,
+      "reach": 900,
+      "damage": 23,
+      "windup": 1.6,
+      "recovery": 2.5,
+      "tile": 15
+    }
+  },
+  "techniques": {
+    "cordao": {
+      "cost": 26,
+      "cooldown": 2.8,
+      "damage": 18,
+      "range": 155,
+      "description": "Interrompe mecanismos próximos e desfaz projéteis."
+    },
+    "fratura": {
+      "cost": 32,
+      "cooldown": 2.5,
+      "damage": 42,
+      "range": 410,
+      "description": "Impulso em linha; rompe a postura dos escudos."
+    }
+  }
+}
