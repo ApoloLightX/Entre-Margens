@@ -1,0 +1,53 @@
+name: Package Entre Margens v1.0 source for diagnostics
+
+on:
+  push:
+    branches:
+      - release/1.0-final
+  workflow_dispatch:
+
+jobs:
+  package-source:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.5.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply verified v1.0 overlay
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 -d .release/v1.0.patch.gz.b64 | gzip -d > /tmp/v1.0.patch
+          echo '57cc6fc17fec0a6c06f226bfba9c3233590e31c61ea0767d1a713f617b82efb4  /tmp/v1.0.patch' | sha256sum -c -
+          git apply --check /tmp/v1.0.patch
+          git apply /tmp/v1.0.patch
+          grep -q 'version/name="1.0"' godot/export_presets.cfg
+          grep -q 'version/code=8' godot/export_presets.cfg
+          grep -q '"contrapeso"' godot/data/action/combat.json
+          test -f docs/14_POLIMENTO_100.md
+
+      - name: Package sanitized source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/package/Entre_Margens_v1.0
+          cp -a . /tmp/package/Entre_Margens_v1.0/
+          rm -rf /tmp/package/Entre_Margens_v1.0/.git
+          rm -rf /tmp/package/Entre_Margens_v1.0/.release
+          rm -rf /tmp/package/Entre_Margens_v1.0/.github/workflows
+          rm -rf /tmp/package/Entre_Margens_v1.0/godot/.godot
+          rm -f /tmp/package/Entre_Margens_v1.0/development/android-debug.keystore
+          cp /tmp/v1.0.patch /tmp/package/V1_0_CHANGES.patch
+          cd /tmp/package
+          jar --create --file Entre_Margens_v1.0_Fonte_Claude.zip Entre_Margens_v1.0 V1_0_CHANGES.patch
+          ls -lh Entre_Margens_v1.0_Fonte_Claude.zip
+
+      - name: Upload source package
+        uses: actions/upload-artifact@v4
+        with:
+          name: Entre_Margens_v1.0_Fonte_Claude
+          path: /tmp/package/Entre_Margens_v1.0_Fonte_Claude.zip
+          if-no-files-found: error
+          compression-level: 0
