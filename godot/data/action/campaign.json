@@ -1,0 +1,1682 @@
+{
+  "title": "A Travessia Sem Nome",
+  "version": 4,
+  "rooms": [
+    {
+      "id": "porto",
+      "name": "Várzea de Vidro",
+      "subtitle": "01 · Uma tarefa pequena",
+      "size": [
+        1500,
+        1100
+      ],
+      "spawn": [
+        290,
+        660
+      ],
+      "exit": [
+        1340,
+        400
+      ],
+      "color": "344c56",
+      "floor": "warm",
+      "weather": 0.3,
+      "required": [
+        "dena",
+        "sena",
+        "lior"
+      ],
+      "objects": [
+        {
+          "id": "dena",
+          "x": 490,
+          "y": 580,
+          "kind": "dialogue",
+          "title": "Dena · manutenção",
+          "text": "A passarela norte sumiu dos mapas esta manhã. A caldeira ainda envia calor para lá. Você trabalha com reparos: preciso de seus olhos, não de um herói.\n\nSena espera junto ao cais; Lior trouxe uma placa. Conversem antes de partir. Se precisar recuar, as lanternas de descanso guardam seu avanço.",
+          "npc": true
+        },
+        {
+          "id": "sena",
+          "x": 980,
+          "y": 820,
+          "kind": "dialogue",
+          "title": "Sena · cartógrafa",
+          "text": "Eu medi aquela ponte ontem. Agora meu mapa termina na margem, mas a corda de medição ainda está molhada.\n\nNas ruínas há mecanismos que defendem passagens vazias. Espere o aviso âmbar no chão; esquive para o lado. Ataques curtos recuperam foco. Magia abre espaço, não resolve tudo.",
+          "npc": true
+        },
+        {
+          "id": "lior",
+          "x": 1020,
+          "y": 330,
+          "kind": "note",
+          "title": "Lior · arquivo",
+          "text": "Nesta placa consta: MANTER O CONTORNO. O centro não deve receber alimentação direta.\n\nTrouxe uma cópia presa a um cordão. Abra o Diário e ancore este registro. Uma cópia comum pode mudar junto com o original. Não sei se o cordão vai funcionar; saberemos comparando os dois.",
+          "npc": true,
+          "anchor_text": "A inscrição original dizia: MANTER O CONTORNO. Nunca alimentar o centro.",
+          "altered": "A inscrição agora diz: ALIMENTAR O CENTRO. Lior jura que sempre esteve assim."
+        },
+        {
+          "id": "porto_rest",
+          "x": 300,
+          "y": 690,
+          "kind": "rest",
+          "title": "Lanterna de descanso",
+          "text": "Recupera vigor, foco e dois curativos. Seu avanço é salvo aqui."
+        },
+        {
+          "id": "porto_cache",
+          "x": 680,
+          "y": 900,
+          "kind": "chest",
+          "title": "Entrega esquecida",
+          "text": "Peças de cobre e um curativo aguardavam alguém que não veio."
+        },
+        {
+          "id": "porto_lore",
+          "x": 710,
+          "y": 320,
+          "kind": "note",
+          "title": "Folheto de Iqaluit",
+          "text": "Uma edição popular atribui toda a reconstrução a uma só pessoa. Outra, na margem, enumera trabalhadores e famílias. Lior sublinhou: \"Uma história precisa de mais de uma testemunha.\"",
+          "anchor_text": "Duas versões do mesmo passado conviviam na mesma página.",
+          "altered": "O folheto perdeu as anotações nas margens."
+        }
+      ],
+      "groups": [],
+      "props": [
+        {
+          "tile": 0,
+          "x": 450,
+          "y": 410,
+          "size": 290,
+          "solid": true
+        },
+        {
+          "tile": 0,
+          "x": 1020,
+          "y": 210,
+          "size": 250,
+          "solid": true
+        },
+        {
+          "tile": 4,
+          "x": 650,
+          "y": 590,
+          "size": 155,
+          "solid": true
+        },
+        {
+          "tile": 12,
+          "x": 1130,
+          "y": 910,
+          "size": 260,
+          "solid": false
+        },
+        {
+          "tile": 13,
+          "x": 320,
+          "y": 710,
+          "size": 95,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 170,
+          "y": 330,
+          "size": 190,
+          "solid": true
+        },
+        {
+          "tile": 2,
+          "x": 1300,
+          "y": 850,
+          "size": 200,
+          "solid": true
+        },
+        {
+          "tile": 14,
+          "x": 240,
+          "y": 940,
+          "size": 150,
+          "solid": true
+        },
+        {
+          "tile": 1,
+          "x": 1340,
+          "y": 390,
+          "size": 205,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 70.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 342.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 614.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 886.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1158.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1430.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 70.0,
+          "y": 1055,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 342.0,
+          "y": 1055,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 614.0,
+          "y": 1055,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 886.0,
+          "y": 1055,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1158.0,
+          "y": 1055,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1430.0,
+          "y": 1055,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 7,
+          "x": 680,
+          "y": 888,
+          "size": 88,
+          "solid": false
+        }
+      ],
+      "objective": "Converse com Dena, Sena e Lior."
+    },
+    {
+      "id": "vereda",
+      "name": "Vereda das Caldeiras",
+      "subtitle": "02 · O caminho ainda está aqui",
+      "size": [
+        2350,
+        1450
+      ],
+      "spawn": [
+        200,
+        1100
+      ],
+      "exit": [
+        2160,
+        300
+      ],
+      "color": "405663",
+      "floor": "snow",
+      "weather": 1.0,
+      "required": [
+        "valvula_a",
+        "valvula_b",
+        "vereda_map"
+      ],
+      "objects": [
+        {
+          "id": "vereda_rest",
+          "x": 220,
+          "y": 1140,
+          "kind": "rest",
+          "title": "Abrigo de Sena",
+          "text": "Um lugar seguro entre o vento e os tubos."
+        },
+        {
+          "id": "valvula_a",
+          "x": 680,
+          "y": 470,
+          "kind": "puzzle",
+          "title": "Válvula da margem",
+          "text": "Os tubos exteriores estão frios; o centro vibra. A placa original indicava onde conduzir o fluxo.",
+          "solution": 0,
+          "options": [
+            "Conduzir pelo contorno",
+            "Alimentar o centro",
+            "Fechar a saída"
+          ],
+          "success": "O calor percorre as bordas. O chão para de vibrar."
+        },
+        {
+          "id": "valvula_b",
+          "x": 1470,
+          "y": 1120,
+          "kind": "puzzle",
+          "title": "Segundo distribuidor",
+          "text": "O visor está coberto de gelo. Um sulco liga os dois tubos exteriores; o tubo central não tem saída.",
+          "solution": 1,
+          "options": [
+            "Pressurizar o centro",
+            "Unir os dois tubos exteriores",
+            "Abrir tudo"
+          ],
+          "success": "Você conecta as margens. A pressão se estabiliza."
+        },
+        {
+          "id": "vereda_map",
+          "x": 1940,
+          "y": 450,
+          "kind": "note",
+          "title": "A corda que atravessa o nada",
+          "text": "As marcas da corda de Sena continuam depois do ponto onde o mapa termina. Você registra a direção real da antiga passarela.\n\nHá algo sob o gelo corrigindo os registros, mas não a corda.",
+          "anchor_text": "A corda de Sena atravessa a passagem que o mapa não mostra.",
+          "altered": "O mapa agora mostra um muro. A corda ainda o contradiz."
+        },
+        {
+          "id": "vereda_cache",
+          "x": 1090,
+          "y": 240,
+          "kind": "chest",
+          "title": "Caixa sob a neve",
+          "text": "Peças protegidas por uma manta seca."
+        },
+        {
+          "id": "vereda_lore",
+          "x": 1810,
+          "y": 1210,
+          "kind": "note",
+          "title": "Bilhete de Tovan",
+          "text": "\"Não usem resíduos de ossos para pôr a máquina em marcha. Sei o preço dessa facilidade. Mandem cobre, mesmo que demore.\"",
+          "anchor_text": "Tovan recusou um combustível ligado a vida residual.",
+          "altered": "O bilhete de Tovan perdeu sua última linha."
+        }
+      ],
+      "groups": [
+        {
+          "id": "v1",
+          "x": 560,
+          "y": 880,
+          "kinds": [
+            "crawler",
+            "crawler",
+            "ranged"
+          ]
+        },
+        {
+          "id": "v2",
+          "x": 930,
+          "y": 450,
+          "kinds": [
+            "crawler",
+            "shield",
+            "ranged"
+          ],
+          "reinforcements": [
+            "ranged",
+            "crawler",
+            "shield"
+          ]
+        },
+        {
+          "id": "v3",
+          "x": 1320,
+          "y": 1010,
+          "kinds": [
+            "crawler",
+            "crawler",
+            "shield",
+            "ranged"
+          ]
+        },
+        {
+          "id": "v4",
+          "x": 1860,
+          "y": 650,
+          "kinds": [
+            "shield",
+            "ranged",
+            "ranged"
+          ],
+          "reinforcements": [
+            "ranged",
+            "crawler",
+            "shield"
+          ]
+        }
+      ],
+      "props": [
+        {
+          "tile": 4,
+          "x": 680,
+          "y": 440,
+          "size": 150,
+          "solid": true
+        },
+        {
+          "tile": 4,
+          "x": 1470,
+          "y": 1080,
+          "size": 150,
+          "solid": true
+        },
+        {
+          "tile": 1,
+          "x": 2150,
+          "y": 270,
+          "size": 220,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 390,
+          "y": 600,
+          "size": 210,
+          "solid": true
+        },
+        {
+          "tile": 2,
+          "x": 1120,
+          "y": 680,
+          "size": 210,
+          "solid": true
+        },
+        {
+          "tile": 2,
+          "x": 1630,
+          "y": 300,
+          "size": 220,
+          "solid": true
+        },
+        {
+          "tile": 6,
+          "x": 1090,
+          "y": 1000,
+          "size": 150,
+          "solid": true
+        },
+        {
+          "tile": 6,
+          "x": 1720,
+          "y": 1070,
+          "size": 170,
+          "solid": true
+        },
+        {
+          "tile": 8,
+          "x": 920,
+          "y": 250,
+          "size": 230,
+          "solid": true
+        },
+        {
+          "tile": 13,
+          "x": 230,
+          "y": 1190,
+          "size": 95,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 70.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 512.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 954.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1396.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1838.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 2280.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 70.0,
+          "y": 1405,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 512.0,
+          "y": 1405,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 954.0,
+          "y": 1405,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1396.0,
+          "y": 1405,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1838.0,
+          "y": 1405,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 2280.0,
+          "y": 1405,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 7,
+          "x": 1090,
+          "y": 228,
+          "size": 88,
+          "solid": false
+        }
+      ],
+      "objective": "Investigue os pontos marcados e estabilize a passagem."
+    },
+    {
+      "id": "galeria",
+      "name": "Galeria do Contorno",
+      "subtitle": "03 · Aquilo que o gelo conserva",
+      "size": [
+        2400,
+        1500
+      ],
+      "spawn": [
+        200,
+        300
+      ],
+      "exit": [
+        2200,
+        1170
+      ],
+      "color": "273a4c",
+      "floor": "ruin",
+      "weather": 0.0,
+      "required": [
+        "galeria_lesson",
+        "galeria_a",
+        "galeria_b",
+        "galeria_c"
+      ],
+      "objects": [
+        {
+          "id": "galeria_rest",
+          "x": 230,
+          "y": 350,
+          "kind": "rest",
+          "title": "Luz entre as pedras",
+          "text": "As marcas do cordão continuam visíveis."
+        },
+        {
+          "id": "galeria_lesson",
+          "x": 460,
+          "y": 370,
+          "kind": "technique",
+          "title": "Instrumento de calibração",
+          "text": "Uma ferramenta comum de manutenção, modificada para aplicar impulso ao longo de uma fissura.\n\nVocê aprende FRATURA: um golpe em linha que atravessa sentinelas e rompe a postura de escudos. Troque a técnica no alto da tela. O CORDÃO interrompe mecanismos próximos e desfaz projéteis.",
+          "technique": "fratura"
+        },
+        {
+          "id": "galeria_a",
+          "x": 660,
+          "y": 1150,
+          "kind": "puzzle",
+          "title": "Primeiro aro",
+          "text": "As setas gravadas seguem a borda. Só a seta do centro foi riscada.",
+          "solution": 2,
+          "options": [
+            "Seguir o risco central",
+            "Inverter todo o fluxo",
+            "Continuar pelas bordas"
+          ],
+          "success": "O primeiro aro se firma; uma nota musical volta ao ambiente.",
+          "puzzle_type": "circuit"
+        },
+        {
+          "id": "galeria_b",
+          "x": 1280,
+          "y": 390,
+          "kind": "puzzle",
+          "title": "Segundo aro",
+          "text": "O desenho tem três circuitos: um aberto no alto, um ligado ao centro e outro fechado em volta dele.",
+          "solution": 0,
+          "options": [
+            "Usar o circuito exterior fechado",
+            "Usar a ligação central",
+            "Usar a abertura superior"
+          ],
+          "success": "A vibração encontra uma saída pelas margens.",
+          "puzzle_type": "circuit"
+        },
+        {
+          "id": "galeria_c",
+          "x": 1930,
+          "y": 1180,
+          "kind": "puzzle",
+          "title": "Terceiro aro",
+          "text": "Uma anotação de manutenção: CONTORNO PRIMEIRO. O último acoplamento aponta para dentro.",
+          "solution": 1,
+          "options": [
+            "Aumentar a energia",
+            "Virar o acoplamento para fora",
+            "Remover os três aros"
+          ],
+          "success": "A galeria se abre sem alimentar o núcleo.",
+          "puzzle_type": "circuit"
+        },
+        {
+          "id": "galeria_lore",
+          "x": 1680,
+          "y": 260,
+          "kind": "note",
+          "title": "Inventário sem data",
+          "text": "A lista inclui mesas, ferramentas, pontes. Não inclui nomes de pessoas. Esta estrutura foi construída para conservar coisas.\n\nUma entrada se repete: REFERÊNCIA MATERIAL. Não há nenhuma promessa de trazer mortos de volta.",
+          "anchor_text": "O sistema conserva referências materiais, não pessoas nem almas.",
+          "altered": "As palavras REFERÊNCIA MATERIAL foram substituídas por ESTADO CORRETO."
+        },
+        {
+          "id": "galeria_cache",
+          "x": 410,
+          "y": 1270,
+          "kind": "chest",
+          "title": "Armário de manutenção",
+          "text": "O mecanismo interno sobreviveu à água."
+        }
+      ],
+      "groups": [
+        {
+          "id": "g1",
+          "x": 650,
+          "y": 830,
+          "kinds": [
+            "crawler",
+            "ranged",
+            "ranged"
+          ]
+        },
+        {
+          "id": "g2",
+          "x": 1060,
+          "y": 700,
+          "kinds": [
+            "shield",
+            "crawler",
+            "ranged"
+          ],
+          "reinforcements": [
+            "ranged",
+            "crawler",
+            "shield"
+          ]
+        },
+        {
+          "id": "g3",
+          "x": 1440,
+          "y": 460,
+          "kinds": [
+            "shield",
+            "ranged",
+            "crawler",
+            "crawler"
+          ]
+        },
+        {
+          "id": "g4",
+          "x": 1870,
+          "y": 1050,
+          "kinds": [
+            "shield",
+            "shield",
+            "ranged",
+            "crawler"
+          ],
+          "reinforcements": [
+            "ranged",
+            "crawler",
+            "shield"
+          ]
+        }
+      ],
+      "props": [
+        {
+          "tile": 11,
+          "x": 660,
+          "y": 1100,
+          "size": 180,
+          "solid": false
+        },
+        {
+          "tile": 11,
+          "x": 1280,
+          "y": 340,
+          "size": 180,
+          "solid": false
+        },
+        {
+          "tile": 11,
+          "x": 1930,
+          "y": 1130,
+          "size": 180,
+          "solid": false
+        },
+        {
+          "tile": 15,
+          "x": 1200,
+          "y": 1100,
+          "size": 230,
+          "solid": true
+        },
+        {
+          "tile": 9,
+          "x": 850,
+          "y": 560,
+          "size": 230,
+          "solid": true
+        },
+        {
+          "tile": 9,
+          "x": 1550,
+          "y": 850,
+          "size": 230,
+          "solid": true
+        },
+        {
+          "tile": 3,
+          "x": 400,
+          "y": 800,
+          "size": 170,
+          "solid": true
+        },
+        {
+          "tile": 3,
+          "x": 1760,
+          "y": 500,
+          "size": 170,
+          "solid": true
+        },
+        {
+          "tile": 1,
+          "x": 2200,
+          "y": 1140,
+          "size": 210,
+          "solid": false
+        },
+        {
+          "tile": 13,
+          "x": 230,
+          "y": 400,
+          "size": 95,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 70.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 522.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 974.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1426.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1878.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 2330.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 70.0,
+          "y": 1455,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 522.0,
+          "y": 1455,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 974.0,
+          "y": 1455,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1426.0,
+          "y": 1455,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1878.0,
+          "y": 1455,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 2330.0,
+          "y": 1455,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 7,
+          "x": 410,
+          "y": 1258,
+          "size": 88,
+          "solid": false
+        }
+      ],
+      "objective": "Investigue os pontos marcados e estabilize a passagem."
+    },
+    {
+      "id": "arquivo",
+      "name": "Arquivo da Outra Margem",
+      "subtitle": "04 · O que você lembra?",
+      "size": [
+        2200,
+        1450
+      ],
+      "spawn": [
+        200,
+        1060
+      ],
+      "exit": [
+        2020,
+        370
+      ],
+      "color": "353f51",
+      "floor": "ruin",
+      "weather": 0.2,
+      "required": [
+        "arquivo_event",
+        "arquivo_witness",
+        "arquivo_gate"
+      ],
+      "objects": [
+        {
+          "id": "arquivo_rest",
+          "x": 220,
+          "y": 1110,
+          "kind": "rest",
+          "title": "Ponto de retorno",
+          "text": "Você confere as marcas deixadas no chão."
+        },
+        {
+          "id": "arquivo_event",
+          "x": 680,
+          "y": 430,
+          "kind": "anomaly",
+          "title": "A placa impossível",
+          "text": "A mesma placa agora ordena ALIMENTAR O CENTRO. A tinta da cópia comum muda enquanto você olha.\n\nLior fala pelo tubo acústico: \"Sempre esteve escrito assim.\" Uma nota some da música. Abra o Diário e compare as âncoras.\n\nO tempo não voltou: sua pegada nova continua no gelo."
+        },
+        {
+          "id": "arquivo_witness",
+          "x": 1280,
+          "y": 1140,
+          "kind": "note",
+          "title": "A margem da cópia",
+          "text": "O papel comum tem um sulco sem tinta: MANTER O CONTORNO. A pressão da mão sobreviveu à alteração do texto.\n\nSe você não ancorou a placa, esta evidência permite reconstruir a instrução. Nenhuma lembrança única será necessária para continuar.",
+          "anchor_text": "O sulco físico confirma MANTER O CONTORNO.",
+          "altered": "A tinta continua errada. O sulco físico permanece legível."
+        },
+        {
+          "id": "arquivo_gate",
+          "x": 1840,
+          "y": 430,
+          "kind": "puzzle",
+          "title": "Comando reescrito",
+          "text": "O painel diz ALIMENTAR O CENTRO. O registro ancorado — ou o sulco encontrado na cópia — mostra outra instrução.",
+          "solution": 0,
+          "options": [
+            "Manter o fluxo no contorno",
+            "Obedecer ao painel atual",
+            "Apagar todos os registros"
+          ],
+          "success": "Você segue a evidência material. O arquivo aceita um estado que ele próprio tentava apagar."
+        },
+        {
+          "id": "arquivo_lore",
+          "x": 1650,
+          "y": 1180,
+          "kind": "note",
+          "title": "Uma frase sem assinatura",
+          "text": "\"Se a margem existe apenas enquanto alguém a desenha, quem escolhe o desenho?\"\n\nA máquina não parece odiar a cidade. Ela trata suas diferenças como defeitos a corrigir.",
+          "anchor_text": "A conservação tornou-se correção compulsória.",
+          "altered": "A pergunta continua ali. A assinatura nunca existiu."
+        },
+        {
+          "id": "arquivo_cache",
+          "x": 970,
+          "y": 230,
+          "kind": "chest",
+          "title": "Gaveta que não mudou",
+          "text": "Uma caixa presa ao mesmo cordão da primeira placa."
+        }
+      ],
+      "groups": [
+        {
+          "id": "a1",
+          "x": 540,
+          "y": 770,
+          "kinds": [
+            "crawler",
+            "shield",
+            "ranged"
+          ]
+        },
+        {
+          "id": "a2",
+          "x": 1000,
+          "y": 830,
+          "kinds": [
+            "ranged",
+            "ranged",
+            "shield"
+          ],
+          "reinforcements": [
+            "ranged",
+            "shield",
+            "ranged",
+            "crawler"
+          ]
+        },
+        {
+          "id": "a3",
+          "x": 1500,
+          "y": 920,
+          "kinds": [
+            "shield",
+            "crawler",
+            "crawler",
+            "ranged"
+          ]
+        },
+        {
+          "id": "a4",
+          "x": 1780,
+          "y": 580,
+          "kinds": [
+            "shield",
+            "shield",
+            "ranged",
+            "ranged"
+          ],
+          "reinforcements": [
+            "ranged",
+            "shield",
+            "ranged",
+            "crawler"
+          ]
+        }
+      ],
+      "props": [
+        {
+          "tile": 10,
+          "x": 680,
+          "y": 380,
+          "size": 200,
+          "solid": false
+        },
+        {
+          "tile": 10,
+          "x": 1280,
+          "y": 1080,
+          "size": 200,
+          "solid": false
+        },
+        {
+          "tile": 11,
+          "x": 1840,
+          "y": 380,
+          "size": 190,
+          "solid": false
+        },
+        {
+          "tile": 8,
+          "x": 1020,
+          "y": 480,
+          "size": 230,
+          "solid": true
+        },
+        {
+          "tile": 9,
+          "x": 1480,
+          "y": 700,
+          "size": 220,
+          "solid": true
+        },
+        {
+          "tile": 3,
+          "x": 400,
+          "y": 360,
+          "size": 150,
+          "solid": true
+        },
+        {
+          "tile": 15,
+          "x": 1600,
+          "y": 250,
+          "size": 240,
+          "solid": true
+        },
+        {
+          "tile": 1,
+          "x": 2020,
+          "y": 330,
+          "size": 210,
+          "solid": false
+        },
+        {
+          "tile": 13,
+          "x": 220,
+          "y": 1160,
+          "size": 95,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 70.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 482.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 894.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1306.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1718.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 2130.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 70.0,
+          "y": 1405,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 482.0,
+          "y": 1405,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 894.0,
+          "y": 1405,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1306.0,
+          "y": 1405,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1718.0,
+          "y": 1405,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 2130.0,
+          "y": 1405,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 7,
+          "x": 970,
+          "y": 218,
+          "size": 88,
+          "solid": false
+        }
+      ],
+      "objective": "Investigue os pontos marcados e estabilize a passagem."
+    },
+    {
+      "id": "soleira",
+      "name": "A Soleira Desenterrada",
+      "subtitle": "05 · A cidade não é um erro",
+      "size": [
+        2350,
+        1500
+      ],
+      "spawn": [
+        200,
+        340
+      ],
+      "exit": [
+        2150,
+        1170
+      ],
+      "color": "3c5662",
+      "floor": "snow",
+      "weather": 0.8,
+      "required": [
+        "soleira_dena",
+        "soleira_a",
+        "soleira_b"
+      ],
+      "objects": [
+        {
+          "id": "soleira_rest",
+          "x": 230,
+          "y": 400,
+          "kind": "rest",
+          "title": "Último abrigo",
+          "text": "A luz alcança o caminho de volta."
+        },
+        {
+          "id": "soleira_dena",
+          "x": 570,
+          "y": 410,
+          "kind": "dialogue",
+          "title": "Dena · pelo tubo acústico",
+          "text": "O aquecimento novo acordou uma rede antiga. Ela tenta conservar um lugar que já não existe como antes.\n\nSe isolarmos a rede, a cidade perde o calor por um tempo. Se a mantivermos ligada pelas bordas, vamos precisar de gente cuidando dela todos os dias. Não posso prometer uma saída sem custo.\n\nDesative os dois alimentadores antes de entrar na câmara. Vou preparar o abrigo para qualquer decisão."
+        },
+        {
+          "id": "soleira_a",
+          "x": 810,
+          "y": 1160,
+          "kind": "puzzle",
+          "title": "Alimentador oeste",
+          "text": "O aro externo está sobrecarregado. Há uma saída para a margem e uma descida para a câmara.",
+          "solution": 1,
+          "options": [
+            "Descer para a câmara",
+            "Desviar para a margem",
+            "Travar sob pressão"
+          ],
+          "success": "Você reduz a alimentação do regulador sem destruir o circuito.",
+          "puzzle_type": "circuit"
+        },
+        {
+          "id": "soleira_b",
+          "x": 1740,
+          "y": 410,
+          "kind": "puzzle",
+          "title": "Alimentador leste",
+          "text": "O indicador insiste no estado antigo. Um acoplamento manual permite romper a ligação direta.",
+          "solution": 2,
+          "options": [
+            "Aceitar o estado antigo",
+            "Forçar o núcleo",
+            "Desacoplar a ligação direta"
+          ],
+          "success": "A câmara perde seu reforço. Você pode alcançar o regulador.",
+          "puzzle_type": "circuit"
+        },
+        {
+          "id": "soleira_lore",
+          "x": 1430,
+          "y": 1240,
+          "kind": "note",
+          "title": "Escala de conservação",
+          "text": "Na pedra estão entalhadas medidas de uma ponte menor que a atual. A rede não quer destruir a passarela: quer devolvê-la à medida antiga.\n\nA corda de Sena estava certa desde o começo.",
+          "anchor_text": "A rede impõe uma referência anterior à comunidade.",
+          "altered": "O tamanho antigo permanece gravado. Agora você entende sua função."
+        },
+        {
+          "id": "soleira_cache",
+          "x": 1940,
+          "y": 1330,
+          "kind": "chest",
+          "title": "Reserva da equipe",
+          "text": "Dena enviou uma caixa de cobre pela tubulação de serviço."
+        }
+      ],
+      "groups": [
+        {
+          "id": "s1",
+          "x": 660,
+          "y": 790,
+          "kinds": [
+            "shield",
+            "crawler",
+            "ranged",
+            "ranged"
+          ]
+        },
+        {
+          "id": "s2",
+          "x": 1110,
+          "y": 1110,
+          "kinds": [
+            "shield",
+            "shield",
+            "ranged"
+          ],
+          "reinforcements": [
+            "ranged",
+            "shield",
+            "ranged",
+            "crawler"
+          ]
+        },
+        {
+          "id": "s3",
+          "x": 1470,
+          "y": 530,
+          "kinds": [
+            "crawler",
+            "crawler",
+            "ranged",
+            "ranged"
+          ]
+        },
+        {
+          "id": "s4",
+          "x": 1910,
+          "y": 920,
+          "kinds": [
+            "shield",
+            "shield",
+            "ranged",
+            "crawler"
+          ],
+          "reinforcements": [
+            "ranged",
+            "shield",
+            "ranged",
+            "crawler"
+          ]
+        }
+      ],
+      "props": [
+        {
+          "tile": 4,
+          "x": 810,
+          "y": 1110,
+          "size": 200,
+          "solid": false
+        },
+        {
+          "tile": 4,
+          "x": 1740,
+          "y": 360,
+          "size": 200,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 420,
+          "y": 1030,
+          "size": 230,
+          "solid": true
+        },
+        {
+          "tile": 14,
+          "x": 1050,
+          "y": 600,
+          "size": 230,
+          "solid": true
+        },
+        {
+          "tile": 6,
+          "x": 1490,
+          "y": 900,
+          "size": 200,
+          "solid": true
+        },
+        {
+          "tile": 9,
+          "x": 1200,
+          "y": 350,
+          "size": 230,
+          "solid": true
+        },
+        {
+          "tile": 1,
+          "x": 2150,
+          "y": 1130,
+          "size": 250,
+          "solid": false
+        },
+        {
+          "tile": 13,
+          "x": 230,
+          "y": 450,
+          "size": 95,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 70.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 512.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 954.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1396.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1838.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 2280.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 70.0,
+          "y": 1455,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 512.0,
+          "y": 1455,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 954.0,
+          "y": 1455,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1396.0,
+          "y": 1455,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 1838.0,
+          "y": 1455,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 2,
+          "x": 2280.0,
+          "y": 1455,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 7,
+          "x": 1940,
+          "y": 1318,
+          "size": 88,
+          "solid": false
+        }
+      ],
+      "objective": "Investigue os pontos marcados e estabilize a passagem."
+    },
+    {
+      "id": "camara",
+      "name": "Câmara da Permanência",
+      "subtitle": "06 · Entre duas margens",
+      "size": [
+        1600,
+        1350
+      ],
+      "spawn": [
+        300,
+        1110
+      ],
+      "exit": [
+        1400,
+        220
+      ],
+      "color": "263a49",
+      "floor": "ruin",
+      "weather": 0.05,
+      "required": [
+        "regulador",
+        "final_choice"
+      ],
+      "objects": [
+        {
+          "id": "camara_rest",
+          "x": 260,
+          "y": 1140,
+          "kind": "rest",
+          "title": "Antes do último aro",
+          "text": "Respire. O regulador anuncia cada golpe. Esquive de suas linhas, saia dos círculos e ataque na recuperação."
+        },
+        {
+          "id": "boss_start",
+          "x": 530,
+          "y": 880,
+          "kind": "dialogue",
+          "title": "O regulador desperta",
+          "text": "A máquina ergue seus aros. Não há voz pedindo liberdade. Só um comando: preservar a referência.\n\nTrês ciclos de defesa: varredura em linha, pressão circular, descarga em leque. Ataque entre eles. O CORDÃO desfaz projéteis; FRATURA rompe a postura. Quando um aro cair, o próximo ciclo começa.",
+          "start_boss": true
+        },
+        {
+          "id": "final_choice",
+          "x": 860,
+          "y": 260,
+          "kind": "ending",
+          "title": "A Trama de Permanência",
+          "text": "O regulador cessa. A rede permanece. Agora você pode escolher o que a cidade terá de aprender a sustentar."
+        },
+        {
+          "id": "camara_lore",
+          "x": 1270,
+          "y": 1120,
+          "kind": "note",
+          "title": "Último registro",
+          "text": "Nenhum nome divino. Nenhuma prisão. Só uma tarefa antiga, executada por tempo demais: conservar uma passagem.\n\nO erro começou quando a máquina decidiu que viver era desviar do desenho.",
+          "anchor_text": "A Trama é uma infraestrutura de conservação, não outro Coração.",
+          "altered": "O último registro não muda mais."
+        }
+      ],
+      "groups": [],
+      "props": [
+        {
+          "tile": 15,
+          "x": 820,
+          "y": 200,
+          "size": 290,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 470,
+          "y": 400,
+          "size": 190,
+          "solid": true
+        },
+        {
+          "tile": 3,
+          "x": 1180,
+          "y": 400,
+          "size": 190,
+          "solid": true
+        },
+        {
+          "tile": 3,
+          "x": 470,
+          "y": 970,
+          "size": 190,
+          "solid": true
+        },
+        {
+          "tile": 3,
+          "x": 1180,
+          "y": 970,
+          "size": 190,
+          "solid": true
+        },
+        {
+          "tile": 11,
+          "x": 820,
+          "y": 670,
+          "size": 380,
+          "solid": false
+        },
+        {
+          "tile": 13,
+          "x": 260,
+          "y": 1190,
+          "size": 95,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 70.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 362.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 654.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 946.0,
+          "y": 120,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1238.0,
+          "y": 120,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1530.0,
+          "y": 120,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 70.0,
+          "y": 1305,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 362.0,
+          "y": 1305,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 654.0,
+          "y": 1305,
+          "size": 185,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 946.0,
+          "y": 1305,
+          "size": 145,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1238.0,
+          "y": 1305,
+          "size": 165,
+          "solid": false
+        },
+        {
+          "tile": 3,
+          "x": 1530.0,
+          "y": 1305,
+          "size": 185,
+          "solid": false
+        }
+      ],
+      "objective": "Enfrente o regulador e decida o futuro da rede."
+    }
+  ]
+}
