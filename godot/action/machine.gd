@@ -12,10 +12,15 @@ func _process(dt):
 	position=enemy.pos.round();z_index=int(position.y);queue_redraw()
 func _draw():
 	if enemy.is_empty():return
-	var boss=enemy.kind=='boss';var scale_value=2.3 if boss else 1.0
+	var boss=enemy.kind=='boss';var hit_pop=1.0+minf(.045,float(enemy.flash)*.34);var scale_value=(2.3 if boss else 1.0)*hit_pop
 	var tint=Color('#cdb889') if enemy.flash<=0 else Color(1.9,1.8,1.6)
-	var ready=enemy.state=='windup';var sway=sin(clock*9)*2.0
-	var base=Vector2(0,-25-(sin(clock*4)*3 if enemy.kind=='ranged' else 0))
+	var ready=enemy.state=='windup';var recovering=enemy.state=='recover';var sway=sin(clock*9)*2.0*(.35 if recovering else 1.0)
+	var base=Vector2(clampf(float(enemy.recoil.x)*.012,-4,4),-25-(sin(clock*4)*3 if enemy.kind=='ranged' else 0)+(2 if recovering else 0))
+	var core=Color('#8bc7cf')
+	if enemy.kind=='crawler':core=Color('#c7b887')
+	elif enemy.kind=='ranged':core=Color('#72c7df')
+	elif enemy.kind=='shield':core=Color('#a9cfd1')
+	elif boss:core=Color('#9ee8e2')
 	draw_set_transform(Vector2.ZERO,0,Vector2(scale_value,scale_value*.35))
 	draw_circle(Vector2(0,-4),30,Color(.01,.03,.04,.36))
 	draw_set_transform(Vector2.ZERO,0,Vector2.ONE*scale_value)
@@ -29,9 +34,10 @@ func _draw():
 	# Three metal-blade frames share a silhouette. Adjacent atlas cells are bombs.
 	var frame=int(clock*(12 if ready else 3))%3
 	tile(Rect2(256+frame*16,96,16,16),base,Vector2(70,70),tint)
+	draw_circle(base,26,Color('#ffb064',.08+.08*(sin(clock*13)*.5+.5)) if ready else Color(core,.055))
 	draw_circle(base,17,Color('#293d42'))
-	draw_arc(base,19,0,TAU,12,tint,3)
-	tile(Rect2(256+int(clock*5)%4*16,144,16,16),base,Vector2(34,34),Color('#ffb964') if ready else Color('#9bcdd9'))
+	draw_arc(base,19,0,TAU,12,Color('#ffca82') if ready else tint,3)
+	tile(Rect2(256+int(clock*(9 if ready else 5))%4*16,144,16,16),base,Vector2(34,34),Color('#ffb964') if ready else core)
 	if enemy.kind=='ranged':
 		var tip=base+enemy.direction*40
 		draw_line(base+enemy.direction*19,tip,Color('#263a42'),12)
@@ -48,5 +54,7 @@ func _draw():
 			tile(Rect2(256+int(clock*8)%4*16,144,16,16),p,Vector2(18,18),Color('#c9f3ed'))
 	draw_set_transform(Vector2.ZERO)
 	if not boss:
-		draw_rect(Rect2(-27,-62,54,6),Color('#162831'))
+		draw_rect(Rect2(-29,-64,58,10),Color(0.015,.035,.045,.72));draw_rect(Rect2(-27,-62,54,6),Color('#162831'))
 		draw_rect(Rect2(-27,-62,54*maxf(0,enemy.hp)/enemy.max_hp,6),Color('#dfb277'))
+		if enemy.max_hp>40:
+			for i in range(1,3):draw_line(Vector2(-27+54.0*i/3,-62),Vector2(-27+54.0*i/3,-56),Color('#263942'),1)

@@ -83,8 +83,11 @@ func update_camera():
 	if combat.boss_active:
 		for e in combat.enemies:
 			if e.kind=='boss':
-				target=state.position.lerp(e.pos,.45)-Vector2(0,78)
-				distance=minf(distance,1.20)
+				var top=minf(state.position.y-72,e.pos.y-150)
+				var bottom=maxf(state.position.y+12,e.pos.y+18)
+				var visible=get_viewport().get_visible_rect().size
+				distance=clampf(minf((visible.y-210)/(bottom-top),(visible.x-140)/(absf(state.position.x-e.pos.x)+190)),.90,minf(distance,1.20))
+				target=Vector2((state.position.x+e.pos.x)/2,(top+bottom)/2-48/distance)
 				break
 	camera.position=target
 	camera.zoom=camera.zoom.lerp(Vector2.ONE*distance,.10)
@@ -164,7 +167,7 @@ func interact():
 	if o.kind=='anomaly' and not o.id in state.done:
 		state.anomaly=true;sound.set_mood(true,false)
 	if o.kind=='note' and not o.id in state.evidence:state.evidence.append(o.id)
-	if o.kind=='technique' and not o.technique in state.learned:
+	if o.has('technique') and not o.technique in state.learned:
 		state.learned.append(o.technique);state.technique=o.technique
 	if not o.id in state.done:state.done.append(o.id)
 	save_progress();hud.dialogue(o)
@@ -194,8 +197,12 @@ func heal():
 	if state.health>=state.max_health():return
 	state.heals-=1;state.health=minf(state.max_health(),state.health+55);sound.effect('chime');save_progress()
 func switch_technique():
-	if state.learned.size()<2:toast('Uma segunda técnica aguarda na Galeria.');return
-	state.technique='fratura' if state.technique=='cordao' else 'cordao';toast('Técnica: '+state.technique.to_upper())
+	var available=[]
+	for id in ['cordao','fratura','contrapeso']:
+		if id in state.learned:available.append(id)
+	if available.size()<2:toast('Uma segunda técnica aguarda na Galeria.');return
+	var index=available.find(state.technique);state.technique=available[(index+1)%available.size()]
+	toast('Técnica: '+state.technique.to_upper())
 func fall():pending_fall=true
 func resolve_fall():
 	pending_fall=false;state.deaths+=1;state.position=checkpoint;state.health=state.max_health();state.focus=100;state.heals=maxi(state.heals,2)
@@ -213,7 +220,7 @@ func save_progress():
 func back():
 	if not modal:hud.pause_menu();return
 	if hud.page=='title':return
-	if hud.page=='settings' or hud.page=='credits':
+	if hud.page=='settings' or hud.page=='credits' or hud.page=='help':
 		if session_active:hud.pause_menu()
 		else:hud.title()
 	elif hud.page=='new':hud.title()

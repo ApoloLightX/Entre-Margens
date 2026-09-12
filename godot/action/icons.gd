@@ -6,6 +6,7 @@ const PATHS={
 	'dodge':'<path d="m7 7 8 9-8 9m11-18 8 9-8 9"/>',
 	'cordao':'<circle cx="16" cy="16" r="10"/><path d="M16 2v8m0 12v8M2 16h8m12 0h8"/>',
 	'fratura':'<path d="m22 3-12 12 9 2-10 12M7 9l4 2m12 10 3 3"/>',
+	'contrapeso':'<path d="M16 4v24M7 9h18M9 9l-5 8h10Zm14 0-5 8h10ZM10 28h12"/>',
 	'diary':'<path d="M5 5h18a3 3 0 0 1 3 3v20H8a3 3 0 0 1-3-3ZM10 5v23m5-16h6m-6 5h6"/>',
 	'map':'<path d="m3 8 8-3 10 4 8-3v19l-8 3-10-4-8 3Zm8-3v19M21 9v19"/>',
 	'pause':'<path d="M11 6v20M22 6v20"/>',

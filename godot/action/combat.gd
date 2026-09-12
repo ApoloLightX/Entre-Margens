@@ -26,16 +26,43 @@ var hit_stop=0.0
 var shake=0.0
 var spawn_serial=0
 var walk_distance=0.0
+var guard_time=0.0
+var guard_ready=false
 func setup(g):game=g
 func reset():
 	enemies.clear();projectiles.clear();effects.clear();triggered.clear();reinforced.clear()
 	attack_cd=0;spell_cd=0;dodge_cd=0;dodge_time=0;invulnerable=0;hurt_time=0;combo=0;combo_time=0;attack_flash=0;boss_active=false;boss_cycle=0
-	spell_flash=0;strike_wait=0;strike_pending=false;hit_stop=0;shake=0;walk_distance=0
+	spell_flash=0;strike_wait=0;strike_pending=false;hit_stop=0;shake=0;walk_distance=0;guard_time=0;guard_ready=false
+func tick_effects(dt:float):
+	for fx in effects:fx.life-=dt
+	effects=effects.filter(func(fx):return fx.life>0)
+func replace_technique_effect(source:String,fx:Dictionary):
+	effects=effects.filter(func(item):
+		if item.get('source','')==source:return false
+		return not (source=='fratura' and item.kind in ['ring','beam']))
+	fx['source']=source;effects.append(fx)
+func show_status(e:Dictionary,status:String):
+	var owner=int(e.get('visual_id',-1))
+	effects=effects.filter(func(fx):return not (fx.kind=='status' and fx.get('owner',-2)==owner and fx.get('status','')==status))
+	var base=e.pos+Vector2(0,-65);var nearby=0
+	for fx in effects:
+		if fx.kind=='status' and fx.pos.distance_to(base)<40:nearby+=1
+	var lanes=[0.0,-14.0,14.0,-28.0,28.0];var lane=mini(nearby,lanes.size()-1)
+	effects.append({'kind':'status','pos':base+Vector2(lanes[lane],0),'status':status,'owner':owner,'life':.52,'max':.52})
+func floating_text(pos:Vector2,text:String):
+	var nearby=0
+	for fx in effects:
+		if fx.kind=='text' and fx.pos.distance_to(pos)<56:nearby+=1
+	var lanes=[0.0,-15.0,15.0,-30.0,30.0]
+	var lane=mini(nearby,lanes.size()-1)
+	var lift=int(nearby/lanes.size())*10
+	effects.append({'kind':'text','pos':pos+Vector2(lanes[lane],-lift),'text':text,'life':.65,'max':.65})
 func spawn(kind:String,pos:Vector2,group_id:String):
 	var spec=game.catalog.combat.enemies[kind]
 	enemies.append({'kind':kind,'pos':pos,'hp':float(spec.health),'max_hp':float(spec.health),'spec':spec,'group':group_id,'state':'idle','timer':.3+enemies.size()*.18,'aim':Vector2.ZERO,'direction':Vector2.RIGHT,'flash':0.0,'stagger':0.0,'phase':0,'pattern':0})
 	enemies[-1].recoil=Vector2.ZERO;enemies[-1].windup_duration=float(spec.windup)
 	spawn_serial+=1;enemies[-1].visual_id=spawn_serial
+	effects.append({'kind':'spawn','pos':pos,'life':.38,'max':.38})
 func start_boss():
 	if boss_active or 'regulador' in game.state.done:return
 	boss_active=true;spawn('boss',Vector2(840,600),'regulador')
@@ -48,7 +75,7 @@ func soft_aim()->Vector2:
 			best=distance;direction=delta.normalized()
 	return direction
 func attack():
-	if attack_cd>0 or dodge_time>0:return
+	if attack_cd>0 or dodge_time>0 or guard_time>0:return
 	facing=soft_aim();combo=combo%3+1;combo_time=1.1
 	attack_cd=.52 if combo==3 else .38;attack_flash=.34
 	strike_wait=.08;strike_pending=true
@@ -64,7 +91,7 @@ func resolve_player_strike():
 			if e.kind=='shield' and e.state!='recover' and e.stagger<=0 and e.direction.dot((game.state.position-e.pos).normalized())>.25:
 				amount*=.3
 				push=0;blocked_hits+=1
-				effects.append({'kind':'text','pos':e.pos+Vector2(0,-65),'text':'ESCUDO','life':.65,'max':.65})
+				show_status(e,'shield')
 			damage(e,amount,combo==3,push);hits+=1
 	game.state.focus=minf(100,game.state.focus+hits*7)
 	effects.append({'kind':'slash','pos':game.state.position,'dir':facing,'life':.19,'max':.19,'strong':combo==3})
@@ -73,6 +100,7 @@ func resolve_player_strike():
 		if blocked_hits<hits:game.sound.effect('body',.35 if combo<3 else .55)
 		hit_stop=.045 if combo==3 else .027
 		shake=3.0 if combo==3 else 1.5
+		game.sound.duck(.08,.82 if combo==3 else .92)
 func cast():
 	var s=game.catalog.combat.techniques[game.state.technique]
 	if spell_cd>0 or dodge_time>0:return
@@ -81,26 +109,29 @@ func cast():
 	var pos=game.state.position
 	if game.state.technique=='cordao':
 		for e in enemies:
-			if pos.distance_to(e.pos)<155:damage(e,float(s.damage),true,145)
+			if pos.distance_to(e.pos)<155:damage(e,float(s.damage),true,145,'ice')
 		projectiles=projectiles.filter(func(p):return p.pos.distance_to(pos)>205)
 		invulnerable=maxf(invulnerable,.23)
-		effects.append({'kind':'cordao','pos':pos,'radius':155.0,'life':.42,'max':.42})
-	else:
+		replace_technique_effect('cordao',{'kind':'cordao','pos':pos,'radius':155.0,'life':.42,'max':.42})
+	elif game.state.technique=='fratura':
 		for e in enemies:
 			var d=e.pos-pos;var forward=d.dot(facing)
-			if forward>0 and forward<410 and absf(d.cross(facing))<55:damage(e,float(s.damage),true,185)
-		effects.append({'kind':'beam','pos':pos,'dir':facing,'life':.35,'max':.35})
-	game.sound.effect(game.state.technique,.72)
-	game.sound.effect('dodge',.35)
+			if forward>0 and forward<410 and absf(d.cross(facing))<55:damage(e,float(s.damage),true,185,'ice')
+		replace_technique_effect('fratura',{'kind':'fratura','pos':pos,'dir':facing,'life':.35,'max':.35})
+	else:
+		guard_time=float(s.duration);guard_ready=true
+		replace_technique_effect('contrapeso',{'kind':'contrapeso','pos':pos,'dir':facing,'life':guard_time,'max':guard_time})
+	game.sound.effect(game.state.technique,.78)
+	game.sound.effect('dodge',.20)
 func dodge(direction:Vector2):
 	if dodge_cd>0:return
 	if direction.length()>.1:facing=direction.normalized()
 	dodge_cd=1.05;dodge_time=.25;invulnerable=.3
-	strike_pending=false;strike_wait=0;attack_flash=0;spell_flash=0;hit_stop=0
-	effects=effects.filter(func(fx):return fx.kind!='slash')
+	strike_pending=false;strike_wait=0;attack_flash=0;spell_flash=0;hit_stop=0;guard_time=0;guard_ready=false
+	effects=effects.filter(func(fx):return fx.kind!='slash' and fx.get('source','')!='contrapeso')
 	effects.append({'kind':'dash','pos':game.state.position,'dir':facing,'life':.22,'max':.22})
 	game.sound.effect('dodge')
-func damage(e:Dictionary,amount:float,interrupt:bool,push=0.0):
+func damage(e:Dictionary,amount:float,interrupt:bool,push=0.0,tone='metal'):
 	if e.kind=='boss' and e.state!='recover':
 		amount*=.12
 	e.hp-=amount;e.flash=.13;damage_out+=amount
@@ -110,23 +141,31 @@ func damage(e:Dictionary,amount:float,interrupt:bool,push=0.0):
 		e.recoil=away*push
 	if interrupt and e.kind!='boss':e.state='recover';e.timer=1.1;e.stagger=1.1
 	if interrupt and e.kind=='boss' and e.state=='recover':e.timer=maxf(e.timer,1.3)
-	effects.append({'kind':'text','pos':e.pos+Vector2(0,-48),'text':str(int(amount)),'life':.65,'max':.65})
-	effects.append({'kind':'spark','pos':e.pos+Vector2(0,-24),'dir':facing,'life':.24,'max':.24})
+	floating_text(e.pos+Vector2(0,-48),str(int(amount)))
+	effects.append({'kind':'impact','pos':e.pos+Vector2(0,-24),'dir':facing,'life':.22,'max':.22,'heavy':interrupt,'tone':tone})
 func hurt(amount:float):
 	if invulnerable>0:return
+	if guard_time>0 and guard_ready:
+		guard_time=0;guard_ready=false;invulnerable=.28
+		game.state.focus=minf(100,game.state.focus+14)
+		effects=effects.filter(func(fx):return fx.get('source','')!='contrapeso')
+		effects.append({'kind':'contrapeso_break','pos':game.state.position,'life':.28,'max':.28})
+		shake=2.0;game.sound.effect('contrapeso_break',.82);game.sound.effect('block',.28);game.sound.duck(.09,.84);return
 	game.state.health-=amount*(.55 if game.state.assist else 1.0)
 	invulnerable=.6;hurt_time=.24
 	shake=5.0
-	game.sound.effect('hurt')
+	game.sound.effect('hurt');game.sound.duck(.16,.68)
 	if game.state.health<=0:game.fall()
 func tick(dt:float,direction:Vector2):
 	shake=maxf(0,shake-dt*18)
+	tick_effects(dt)
 	if hit_stop>0:
 		hit_stop=maxf(0,hit_stop-dt)
 		return
 	attack_cd=maxf(0,attack_cd-dt);spell_cd=maxf(0,spell_cd-dt);dodge_cd=maxf(0,dodge_cd-dt)
 	invulnerable=maxf(0,invulnerable-dt);hurt_time=maxf(0,hurt_time-dt);attack_flash=maxf(0,attack_flash-dt)
-	spell_flash=maxf(0,spell_flash-dt)
+	spell_flash=maxf(0,spell_flash-dt);guard_time=maxf(0,guard_time-dt)
+	if guard_time<=0:guard_ready=false
 	if strike_pending:
 		strike_wait-=dt
 		if strike_wait<=0:resolve_player_strike()
@@ -135,6 +174,8 @@ func tick(dt:float,direction:Vector2):
 	game.state.focus=minf(100,game.state.focus+dt*5)
 	if dodge_time>0:
 		dodge_time-=dt;game.move_player(facing*610*dt)
+	elif guard_time>0:
+		pass
 	elif direction.length()>.1:
 		if attack_flash<=0:facing=direction.normalized()
 		var before=game.state.position
@@ -162,7 +203,7 @@ func tick(dt:float,direction:Vector2):
 			if phase>e.phase:
 				e.phase=phase;e.state='recover';e.timer=2.4
 				game.toast('ARO '+str(phase)+' ROMPIDO · aproveite a abertura!')
-				game.sound.effect('heavy');shake=5
+				game.sound.effect('heavy');game.sound.duck(.14,.72);shake=5
 				projectiles.clear();game.state.focus=minf(100,game.state.focus+35)
 		if e.state=='idle':
 			if e.kind=='ranged' and dist<160 and not recoiling:
@@ -211,8 +252,6 @@ func tick(dt:float,direction:Vector2):
 				game.toast('Outro circuito despertou · reforços nas margens!')
 			else:
 				game.state.cleared.append(id);game.save_progress()
-	for fx in effects:fx.life-=dt
-	effects=effects.filter(func(fx):return fx.life>0)
 func resolve_attack(e:Dictionary):
 	if game.state.position.distance_to(e.pos)<500:game.sound.effect('enemy',.4)
 	if e.kind=='ranged':

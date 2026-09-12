@@ -1,0 +1,288 @@
+ENTRE MARGENS — CONTEXTO CANÔNICO PARA IA / COLABORADOR
+
+LEIA ESTE ARQUIVO ATÉ O FIM ANTES DE SUGERIR MUDANÇAS.
+
+Projeto: Entre Margens — A Travessia Sem Nome
+Estado canônico: 1.0.4 Layout Review
+Engine: Godot 4.5.1
+Alvo: Android landscape-only
+Package: com.entremargens.prototype
+versionName: 1.0.4
+versionCode: 13
+Viewport lógico: 960x540
+Stretch: canvas_items + expand
+Renderer: GL Compatibility
+minSdk: 24
+target/compile SDK: 35
+ABIs: arm64-v8a e armeabi-v7a
+Repositório público canônico: ApoloLightX/Entre-Margens, branch main
+
+IMPORTANTE PARA QWEN/KIMI/OUTRA IA COM PARSER LIMITADO
+
+Se sua ferramenta consegue ler apenas README.md ou apenas este arquivo, você ainda tem contexto suficiente para não reconstruir decisões antigas. Não assuma que o estado do projeto é 0.5.1, 1.0 ou 1.0.3. Branches release/* e documentos antigos são históricos. A arquitetura final de HUD/touch está em docs/19_LAYOUT_RESPONSIVO_REVIEW_104.md. docs/18_LAYOUT_RESPONSIVO_ANCORAS_103.md é histórico e foi substituído.
+
+NÃO PROPONHA AUTOMATICAMENTE v2.0, NG+, arena infinita, área 7, terceiro final, migração de save ou sistemas novos só porque o projeto permite expansão. Expansão de conteúdo precisa de pedido explícito. O foco atual é estabilidade, playtest físico e polimento.
+
+1. O JOGO HOJE
+
+Entre Margens é um RPG de ação 2D em pixel art para Android. A campanha atual foi desenhada para aproximadamente 25–35 minutos de primeira partida, ainda sem cronometragem humana certificada em aparelho físico.
+
+Escopo atual:
+- 6 áreas;
+- 16 encontros;
+- 24 ondas;
+- 2 desfechos;
+- combate em tempo real;
+- ataque corpo a corpo;
+- esquiva;
+- cura;
+- técnicas Cordão, Fratura e Contrapeso;
+- puzzles de circuito;
+- Diário de Âncoras;
+- chefe Regulador;
+- save schema 4;
+- menu principal próprio;
+- controles touch;
+- jogo somente horizontal.
+
+Referências de outros jogos servem apenas para sensação/leitura. Nunca copiar asset, sprite, UI, áudio, nome ou código de Mageseeker/LoL/outro jogo.
+
+2. APARELHO FÍSICO DE REFERÊNCIA
+
+O aparelho principal do usuário é POCO F7.
+Referência de QA futuro:
+- 2772x1280 físico;
+- landscape;
+- aproximadamente 19.5:9;
+- até 120 Hz.
+
+Isso NÃO deve virar hardcode. O jogo continua com viewport lógico 960x540, canvas_items + expand e anchors responsivos.
+
+3. ESTRUTURA ATIVA
+
+A campanha de ação usa principalmente:
+
+godot/action/main.gd          composição geral, menu e fluxo
+godot/action/world.gd         mundo e integração espacial
+godot/action/hud.gd           HUD e única autoridade de layout responsivo
+godot/action/touch.gd         input touch; recebe geometria do HUD
+godot/action/combat.gd        combate
+godot/action/effects.gd       efeitos de combate
+godot/action/actor.gd         apresentação de ator/jogador
+godot/action/machine.gd       máquinas/inimigos
+godot/action/scenery.gd       cenário
+godot/action/audio.gd         áudio, pitch, prioridades e ducking
+godot/action/icons.gd         ícones do HUD
+godot/action/campaign.gd      progressão
+godot/action/circuit.gd       puzzle
+godot/action/save.gd          save
+godot/action/preferences.gd   preferências + safe area do SO
+
+godot/data/action/campaign.json  estrutura da campanha
+godot/data/action/combat.json    números de combate/técnicas
+
+Os diretórios godot/scenes e godot/systems têm material mais antigo/infraestrutura. Antes de editar um arquivo de nome parecido, confirme que o runtime ativo da campanha está em godot/action.
+
+4. HUD RESPONSIVO — REGRA CRÍTICA
+
+Problema antigo: hud.gd e touch.gd calculavam layout separadamente. Isso podia causar disputa em resize.
+
+Primeira tentativa: 1.0.3 Layout Anchors. Visualmente boa, mas ainda existiam duas autoridades de layout. Foi substituída.
+
+Arquitetura final 1.0.4:
+- hud.gd é a ÚNICA autoridade de layout;
+- somente o HUD reage a Viewport.size_changed;
+- preferences.safe_rect() combina margem do jogo com DisplayServer.get_display_safe_area() no Android;
+- touch.gd não consulta viewport;
+- touch.gd não consulta safe area;
+- touch.gd não escolhe posições por resolução/aspect ratio;
+- hud.gd resolve Controls/anchors/containers e envia geometria final para touch.gd;
+- touch.gd.apply_layout() recebe centro do joystick, raio do joystick e centros/raios das ações;
+- não reintroduzir um cálculo paralelo em touch.gd.
+
+Estrutura conceitual:
+HUD full rect
+  SafeArea
+    HudMargins (MarginContainer)
+      HudBounds
+        TopLeftStack (VBoxContainer)
+          Status Vigor/Foco
+          Curar
+        TopActions (HBoxContainer)
+        InteractionDock bottom-center
+        Joystick bottom-left
+        ActionsBottomRight (GridContainer 2x2)
+
+Posicionamento:
+- Vigor/Foco + Curar: top-left;
+- técnica ativa/CORDÃO + DIÁRIO + MAPA + pausa: top-right;
+- joystick: bottom-left;
+- ESQ/TÉCNICA/ATQ: bottom-right;
+- interação: bottom-center;
+- Gameplay Core central deve ficar sem HUD persistente.
+
+Constantes atuais são unidades lógicas do viewport 960x540, não pixels físicos crus. Por exemplo ACTION_DIAMETER=72 não significa 72 px na tela do celular.
+
+5. SAFE AREA
+
+preferences.gd já usa DisplayServer.get_display_safe_area(). Não duplicar a lógica dentro do HUD. Em Android, a safe area física é convertida para coordenadas do viewport lógico e combinada com a margem própria do jogo.
+
+6. COMBATE / TÉCNICAS
+
+Cordão:
+- anel de gelo ao redor do jogador;
+- identidade clara circular;
+- branco/azul claro com cristais.
+
+Fratura:
+- fissura de gelo em linha na direção do alvo;
+- azul mais saturado/escuro;
+- visualmente diferente do Cordão.
+
+Contrapeso:
+- camada de gelo junto ao corpo;
+- não deve ser um anel expansivo;
+- ao absorver golpe, quebra em fragmentos.
+
+Em tarefas puramente visuais NÃO alterar dano, custo, cooldown, alcance, duração ou hitboxes.
+
+combat.json SHA-256 de referência:
+a875ff60d8827d6e37a550bda3a8dfdc0c2f3962f6b7d9af2ec0279af78603fe
+
+7. HISTÓRICO RESUMIDO
+
+0.5.1
+- base anterior pública;
+- polimento e QA inicial.
+
+1.0
+- campanha/presentation ampliadas;
+- ajustes de VFX/HUD/save;
+- correção de dedupe de Fratura;
+- sem mudança intencional de valores centrais de combate.
+
+1.0.1
+- Cordão, Fratura e Contrapeso recebem identidades de gelo distintas;
+- pose brace;
+- áudio cristalino específico.
+
+1.0.2
+- jogo se torna landscape-only;
+- novo menu principal;
+- joystick bottom-left;
+- ações bottom-right;
+- interação bottom-center;
+- regressão 16:9 / 19.5:9 / 20:9.
+
+1.0.3
+- polimento geral visual e sonoro;
+- telegraphs menos poluídos;
+- feedback de impacto;
+- ducking curto da música;
+- sem rebalanceamento.
+
+1.0.3 Layout Anchors
+- primeira tentativa de migrar para Controls/anchors;
+- histórica/superseded porque touch.gd ainda tinha cálculo próprio.
+
+1.0.4 Layout Review
+- HUD vira autoridade única;
+- touch vira consumidor de geometria;
+- resize dinâmico validado;
+- build canônica atual.
+
+8. TESTES DA BUILD CANÔNICA
+
+Últimos resultados validados:
+- run_tests.gd: 38/38;
+- test_action.gd: 230/230;
+- test_action_draw.gd: 54 callbacks;
+- test_mobile_ui.gd: 137/137;
+- test_polish.gd: 68/68;
+- test_presentation.gd: 87/87.
+
+Resize dinâmico testado:
+960x540 -> 1200x540 -> 540x960 -> 1170x540 -> 960x540
+
+O passo portrait é apenas stress test arquitetural. O APK continua landscape-only.
+
+9. BUILD ANDROID
+
+Preset atual:
+versionName 1.0.4
+versionCode 13
+package com.entremargens.prototype
+minSdk 24
+targetSdk 35
+orientation landscape
+arm64-v8a + armeabi-v7a
+
+Última APK validada teve assinatura APK v2/v3 e o mesmo certificado das builds anteriores.
+NUNCA commitar development/android-debug.keystore nem chave privada.
+
+10. FONTES / LICENÇAS
+
+Fontes do projeto original:
+- body.ttf = DejaVu Sans Book;
+- title.ttf = DejaVu Serif Bold.
+
+A auditoria confirmou caracteres portugueses usados no jogo. A licença DejaVu está documentada no projeto. Consulte LICENCAS.md, godot/assets/CREDITOS.md e third_party antes de redistribuir/substituir assets.
+
+11. REGRAS DE ESCOPO
+
+Em tarefas de UI/polimento:
+- não mudar combat.json;
+- não mudar dano/custo/cooldown/alcance/hitbox;
+- não adicionar encontros/ondas/áreas;
+- manter 16 encontros e 24 ondas;
+- preservar save schema e IDs;
+- manter landscape salvo pedido explícito contrário;
+- HUD deve continuar única fonte de layout do touch.
+
+Em tarefas de combate:
+- ler action/combat.gd + data/action/combat.json + testes;
+- qualquer mudança numérica deve ser intencional e documentada.
+
+Em tarefas narrativas/canônicas:
+- ler docs/01_BIBLIA_DE_LORE.md antes;
+- não reinserir automaticamente personagens/eventos do romance original.
+
+12. O QUE AINDA NÃO FOI VALIDADO
+
+Não declarar como concluído sem aparelho real:
+- playtest completo da 1.0.4 no POCO F7;
+- ergonomia dos controles por 20–30 min;
+- safe area/notch real do aparelho;
+- frame pacing 60/120 Hz;
+- aquecimento/bateria;
+- duração humana real da campanha;
+- necessidade de haptics/vibração.
+
+13. PRÓXIMOS PASSOS RECOMENDADOS
+
+Prioridade real atual:
+1. playtest físico no POCO F7 2772x1280;
+2. adicionar essa resolução à regressão permanente;
+3. corrigir ergonomia somente com evidência do aparelho;
+4. depois continuar polimento de sprites/inimigos/cenário;
+5. manter README.md e AI_CONTEXT.txt atualizados a cada versão canônica.
+
+14. ORDEM DE LEITURA
+
+1. README.md
+2. AI_CONTEXT.txt
+3. docs/19_LAYOUT_RESPONSIVO_REVIEW_104.md
+4. docs/17_POLIMENTO_GERAL_103.md
+5. docs/16_LAYOUT_HORIZONTAL_102.md
+6. docs/15_POLIMENTO_101.md
+7. docs/14_POLIMENTO_100.md
+8. docs/13_POLIMENTO_051.md
+9. docs/01_BIBLIA_DE_LORE.md
+10. docs/09_REDESIGN_ACTION_RPG.md
+11. LICENCAS.md
+
+Leia docs/18 apenas para entender por que a primeira migração de anchors foi substituída.
+
+15. RESUMO DE UMA LINHA
+
+Entre Margens 1.0.4 é um RPG de ação Android landscape em Godot 4.5.1; o HUD é a única autoridade de layout responsivo, touch recebe geometria pronta, o combate mantém 6 áreas/16 encontros/24 ondas, e a próxima prioridade é playtest real no POCO F7 — não inventar expansão de conteúdo sem pedido explícito.

@@ -17,10 +17,13 @@ func valid(d)->bool:
 	for k in ['health','focus','elapsed']:
 		if not is_finite(float(d[k])):return false
 	if d.parts<0 or d.upgrades<0 or d.upgrades>3 or d.heals<0 or d.heals>5:return false
-	if not d.technique in ['cordao','fratura'] or not d.technique in d.learned:return false
+	var techniques=['cordao','fratura','contrapeso']
+	if not d.technique in techniques or not d.technique in d.learned:return false
 	for k in ['done','evidence','anchors','cleared','learned']:
 		for v in d[k]:
 			if not v is String:return false
+	for technique in d.learned:
+		if not technique in techniques:return false
 	for id in d.anchors:
 		if not id in d.anchor_records or not d.anchor_records[id] is String:return false
 	return d.anchors.size()<=3

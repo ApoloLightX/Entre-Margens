@@ -66,6 +66,7 @@ func _process(dt):
 		elif c.hurt_time>0:pose='hurt'
 		elif game.movement.length()>.1:pose='walk'
 	player.present(game.state.position,c.facing,pose,progress,c.hurt_time>0)
+	player.z_index=4001 if not c.enemies.is_empty() else int(game.state.position.y)
 	if frozen:player.pause()
 	for n in residents:
 		var d=n.get_meta('source');var p=Vector2(d.x,d.y)
@@ -90,6 +91,10 @@ func road_distance(p:Vector2)->float:
 	var d=9999.0
 	for i in range(route.size()-1):d=minf(d,p.distance_to(Geometry2D.get_closest_point_to_segment(p,route[i],route[i+1])))
 	return d
+func warning_dashes(a:Vector2,b:Vector2,color:Color,width=2.0,segments=12,duty=.48):
+	var step=(b-a)/float(segments)
+	for i in range(segments):
+		var start=a+step*i;draw_line(start,start+step*duty,color,width)
 func light_pool(p:Vector2,radius:float,strength=1.0):
 	draw_set_transform(p,0,Vector2(1,.55))
 	for ring in range(3,0,-1):draw_circle(Vector2.ZERO,radius*ring/3,Color(1,.70,.35,.025*strength))
@@ -122,30 +127,29 @@ func _draw():
 	for e in game.combat.enemies:
 		if e.state!='windup':continue
 		var progress=clampf(1-e.timer/maxf(.01,e.windup_duration),0,1)
-		var strength=.055+.055*progress
-		var warning=Color('#efb76d')
+		var warning=Color('#efaa70');var edge=Color('#162b34');var glow=.35+progress*.42
 		if e.kind=='boss' and e.pattern==1:
-			draw_circle(e.aim,155,Color(warning,strength));draw_arc(e.aim,155,0,TAU,64,warning,3)
-			draw_arc(e.aim,155*(1-progress),0,TAU,48,Color(warning,.65),2)
+			draw_circle(e.aim,155,Color(warning,.018+.025*progress));draw_arc(e.aim,155,0,TAU,64,Color(edge,.68),5);draw_arc(e.aim,155,0,TAU,64,Color(warning,glow),2)
+			var inner=155*(.18+.82*progress);draw_arc(e.aim,inner,0,TAU,48,Color(warning,.46+.30*progress),2)
 		elif e.kind=='boss' and e.pattern==2:
-			var rays=game.combat.fan_directions(e)
-			var fan=PackedVector2Array([e.pos])
+			var rays=game.combat.fan_directions(e);var fan=PackedVector2Array([e.pos])
 			for ray in rays:fan.append(e.pos+ray*530)
-			draw_colored_polygon(fan,Color(warning,strength*.65))
+			draw_colored_polygon(fan,Color(warning,.012+.018*progress))
 			for ray in rays:
-				draw_line(e.pos+ray*28,e.pos+ray*530,Color(warning,.38+progress*.5),2)
-				draw_line(e.pos+ray*(40+progress*260),e.pos+ray*(60+progress*260),warning,4)
+				warning_dashes(e.pos+ray*34,e.pos+ray*530,Color(warning,.24+.30*progress),1.5,10,.38)
+				var mark=e.pos+ray*(80+progress*320);draw_line(mark-ray*7,mark+ray*8,Color(warning,.86),3)
 		elif e.kind=='ranged' or (e.kind=='boss' and e.pattern==0):
-			var end=e.pos+e.direction*(1100 if e.kind=='boss' else 500)
-			var width=106.0 if e.kind=='boss' else 8.0;var edge=e.direction.orthogonal()*width/2
-			draw_line(e.pos,end,Color(warning,strength),width)
-			for side in [-1,1]:draw_line(e.pos+edge*side,end+edge*side,Color(warning,.8),2)
-			var tip=e.pos.lerp(end,progress*.6)
-			draw_polyline(PackedVector2Array([tip-e.direction*12+e.direction.orthogonal()*10,tip,tip-e.direction*12-e.direction.orthogonal()*10]),warning,3)
+			var end=e.pos+e.direction*(1100 if e.kind=='boss' else 500);var width=106.0 if e.kind=='boss' else 10.0;var side=e.direction.orthogonal()*width/2
+			if e.kind=='boss':draw_line(e.pos,end,Color(warning,.018+.025*progress),width)
+			for sign in [-1,1]:
+				draw_line(e.pos+side*sign,end+side*sign,Color(edge,.62),5);draw_line(e.pos+side*sign,end+side*sign,Color(warning,.58+.22*progress),2)
+			warning_dashes(e.pos+e.direction*24,end,Color(warning,.34+.28*progress),2,14,.42)
+			var tip=e.pos.lerp(end,.10+progress*.56);draw_polyline(PackedVector2Array([tip-e.direction*12+e.direction.orthogonal()*9,tip,tip-e.direction*12-e.direction.orthogonal()*9]),Color(warning,.9),3)
 		else:
 			var radius=float(e.spec.reach)+12
-			draw_circle(e.pos,radius,Color(warning,strength));draw_arc(e.pos,radius,0,TAU,40,warning,2)
-			draw_arc(e.pos,radius+4,-PI/2,-PI/2+TAU*progress,40,warning,3)
+			draw_circle(e.pos,radius,Color(warning,.016+.020*progress));draw_arc(e.pos,radius,0,TAU,40,Color(edge,.68),5)
+			for q in range(4):draw_arc(e.pos,radius,q*PI/2+.10,q*PI/2+1.08,10,Color(warning,.48+.30*progress),2)
+			draw_arc(e.pos,radius+4,-PI/2,-PI/2+TAU*progress,40,Color(warning,.9),3)
 	for o in r.objects:
 		if not view.has_point(Vector2(o.x,o.y)):continue
 		if o.kind=='ending' and not 'regulador' in game.state.done:continue

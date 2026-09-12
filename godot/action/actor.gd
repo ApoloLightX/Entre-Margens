@@ -5,7 +5,7 @@ var style='traveller'
 var pose='idle'
 var direction=0
 static var cache:Dictionary={}
-const SEQUENCES={'idle':[0,1],'walk':[2,3,4,5],'attack':[6,7,8,9],'cast':[12,13,14,15],'hurt':[18],'dodge':[2,3,4,5]}
+const SEQUENCES={'idle':[0,1],'walk':[2,3,4,5],'attack':[6,7,8,9],'brace':[10,11],'cast':[12,13,14,15],'hurt':[18],'dodge':[2,3,4,5]}
 func configure(id:String):
 	style=id;texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 	if not cache.has(id):
@@ -26,6 +26,10 @@ func configure(id:String):
 	play('idle0')
 func present(feet:Vector2,facing:Vector2,kind:String,progress=-1.0,flash=false):
 	position=feet.round();z_index=int(feet.y)
+	if style=='traveller' and get_parent()!=null:
+		var g=get_parent().get('game')
+		if g!=null and g.combat.guard_time>0:
+			kind='brace';var duration=maxf(.01,float(g.catalog.combat.techniques.contrapeso.duration));progress=clampf(1-g.combat.guard_time/duration,0,1)
 	# Atlas rows run S, SE, E, NE, N, NW, W, SW.
 	direction=posmod(int(round((PI/2-facing.angle())/(PI/4))),8)
 	var key=kind+str(direction)
@@ -34,6 +38,15 @@ func present(feet:Vector2,facing:Vector2,kind:String,progress=-1.0,flash=false):
 		pause();frame=mini(sprite_frames.get_frame_count(key)-1,int(progress*sprite_frames.get_frame_count(key)))
 	elif not is_playing():play(key)
 	modulate=Color(1.65,1.25,.95) if flash else Color.WHITE
-	rotation=0;scale=Vector2(3,3)
-	if kind=='dodge':
-		scale=Vector2(3.25,2.65);rotation=facing.x*.12
+	offset=Vector2(0,-9);rotation=0;scale=Vector2(3,3)
+	var pose_t=clampf(progress if progress>=0 else 0.0,0,1);var pulse=sin(pose_t*PI)
+	if kind=='attack':
+		scale=Vector2(3.0+.18*pulse,3.0-.08*pulse);rotation=facing.x*.055*pulse;offset+=facing*2.5*pulse
+	elif kind=='cast':
+		scale=Vector2(3.0+.07*pulse,3.0+.11*pulse);offset.y-=3.0*pulse
+	elif kind=='hurt':
+		scale=Vector2(3.16,2.78);offset-=facing*3.0;rotation=-facing.x*.065
+	elif kind=='dodge':
+		scale=Vector2(3.25,2.65);rotation=facing.x*.12;offset-=facing*2.0
+	elif kind=='brace':
+		scale=Vector2(3.08,2.92);offset.y+=1.0
