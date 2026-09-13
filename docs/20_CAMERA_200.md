@@ -8,4 +8,6 @@ Mantidos os limites das seis salas, o enquadramento temporário do chefe, a esca
 
 Esta etapa não inclui alterações de magia, controles, conteúdo ou balanceamento. Instalar como atualização e conferir Câmera 100% na primeira abertura. Avaliar antecipação de obstáculos, inimigos e comportamento nas bordas; só avançar nas magias após o retorno físico.
 
-Validação da reconstrução e assinatura do APK serão registradas antes da entrega. Os testes automatizados não medem sensação de jogo nem desempenho no POCO F7.
+A reconstrução passou: domínio 38/38; ação 230/230; UI 137/137; polimento 68/68; apresentação 87/87; câmera 93/93; desenho 54 callbacks. Total: 653 verificações. Há avisos preexistentes de recursos em uso ao encerrar testes de UI/polimento. O APK tem assinatura v2/v3, alinhamento de 16 KiB e o mesmo certificado anterior. minSdk 24, targetSdk 35. SHA-256 do APK: 76f7ab466213bb454669fb8b9853a84143e454752ab0ed2d93a9435c61056462. Os testes automatizados não medem sensação de jogo nem desempenho no POCO F7.
+
+Assets e módulos legados necessários para importar e rodar toda a suíte foram recuperados da cópia local do projeto, mantendo suas licenças e os scripts de ação da base 1.0.4. `combat.json` permanece byte-idêntico: a875ff60d8827d6e37a550bda3a8dfdc0c2f3962f6b7d9af2ec0279af78603fe.

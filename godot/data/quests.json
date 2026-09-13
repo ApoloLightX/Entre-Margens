@@ -1,0 +1,25 @@
+{
+  "calha": {
+    "title": "Calha antes da chuva",
+    "description": "Leve 3 fibras e 2 pedras à válvula da propriedade.",
+    "cost": {
+      "fiber": 3,
+      "stone": 2
+    },
+    "money": 25
+  },
+  "soup": {
+    "title": "Caldo de retorno",
+    "description": "Prepare um caldo na bancada e entregue a Ivo.",
+    "cost": {
+      "soup": 1
+    },
+    "money": 30
+  },
+  "memory": {
+    "title": "A etiqueta sem água",
+    "description": "Compare a placa do cais com uma fonte independente na galeria.",
+    "cost": {},
+    "money": 40
+  }
+}

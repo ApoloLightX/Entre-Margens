@@ -1,0 +1,22 @@
+{
+  "soup": {
+    "name": "Caldo de margem",
+    "cost": {
+      "fish": 1,
+      "fungus": 1
+    },
+    "result": {
+      "soup": 1
+    }
+  },
+  "seal": {
+    "name": "Estojo de evidência",
+    "cost": {
+      "fiber": 2,
+      "quartz": 1
+    },
+    "result": {
+      "seal": 1
+    }
+  }
+}

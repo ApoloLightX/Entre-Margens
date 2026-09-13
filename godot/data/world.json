@@ -1,0 +1,175 @@
+{
+  "size": [
+    1280,
+    720
+  ],
+  "buildings": [
+    {
+      "id": "house",
+      "name": "Sua casa",
+      "rect": [
+        115,
+        120,
+        205,
+        150
+      ],
+      "door": [
+        218,
+        280
+      ],
+      "roof": "#596c85"
+    },
+    {
+      "id": "archive",
+      "name": "Arquivo",
+      "rect": [
+        460,
+        90,
+        185,
+        140
+      ],
+      "door": [
+        550,
+        240
+      ],
+      "roof": "#777d89"
+    },
+    {
+      "id": "shop",
+      "name": "Venda da Margem",
+      "rect": [
+        740,
+        90,
+        180,
+        140
+      ],
+      "door": [
+        825,
+        240
+      ],
+      "roof": "#557f72"
+    },
+    {
+      "id": "cafe",
+      "name": "Mesa Baixa",
+      "rect": [
+        560,
+        300,
+        180,
+        125
+      ],
+      "door": [
+        650,
+        435
+      ],
+      "roof": "#996c59"
+    }
+  ],
+  "plots": [
+    [
+      145,
+      345
+    ],
+    [
+      205,
+      345
+    ],
+    [
+      265,
+      345
+    ],
+    [
+      145,
+      400
+    ],
+    [
+      205,
+      400
+    ],
+    [
+      265,
+      400
+    ]
+  ],
+  "forage": [
+    {
+      "id": "fiber1",
+      "item": "fiber",
+      "amount": 2,
+      "pos": [
+        385,
+        530
+      ]
+    },
+    {
+      "id": "fiber2",
+      "item": "fiber",
+      "amount": 2,
+      "pos": [
+        850,
+        565
+      ]
+    },
+    {
+      "id": "stone1",
+      "item": "stone",
+      "amount": 2,
+      "pos": [
+        415,
+        190
+      ]
+    },
+    {
+      "id": "moss1",
+      "item": "moss",
+      "amount": 2,
+      "pos": [
+        375,
+        310
+      ]
+    },
+    {
+      "id": "moss2",
+      "item": "moss",
+      "amount": 2,
+      "pos": [
+        940,
+        555
+      ]
+    }
+  ],
+  "targets": [
+    {
+      "id": "heat",
+      "name": "Calha da propriedade",
+      "pos": [
+        335,
+        375
+      ]
+    },
+    {
+      "id": "sign",
+      "name": "Placa do cais",
+      "pos": [
+        1000,
+        480
+      ]
+    },
+    {
+      "id": "fish",
+      "name": "Pescar no cais",
+      "pos": [
+        1100,
+        410
+      ]
+    },
+    {
+      "id": "cave",
+      "name": "Galeria de Soleira",
+      "pos": [
+        1110,
+        155
+      ]
+    }
+  ]
+}

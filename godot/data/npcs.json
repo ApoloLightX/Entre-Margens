@@ -1,0 +1,194 @@
+{
+  "dena": {
+    "name": "Dena",
+    "age": 34,
+    "pronouns": "ela",
+    "color": "#cf8562",
+    "home": "Casa do Retorno",
+    "schedule": [
+      {
+        "start": 6,
+        "position": [
+          600,
+          390
+        ]
+      },
+      {
+        "start": 13,
+        "position": [
+          820,
+          455
+        ]
+      },
+      {
+        "start": 18,
+        "position": [
+          640,
+          475
+        ]
+      }
+    ],
+    "lore_status": "N",
+    "dialogue": "dena"
+  },
+  "ivo": {
+    "name": "Ivo",
+    "age": 29,
+    "pronouns": "ele",
+    "color": "#709b96",
+    "home": "Mesa Baixa",
+    "schedule": [
+      {
+        "start": 6,
+        "position": [
+          665,
+          455
+        ]
+      },
+      {
+        "start": 13,
+        "position": [
+          730,
+          445
+        ]
+      },
+      {
+        "start": 18,
+        "position": [
+          660,
+          470
+        ]
+      }
+    ],
+    "lore_status": "N",
+    "dialogue": "ivo"
+  },
+  "sena": {
+    "name": "Sena",
+    "age": 27,
+    "pronouns": "ela",
+    "color": "#7da6cd",
+    "home": "Casa da Proa",
+    "schedule": [
+      {
+        "start": 6,
+        "position": [
+          1010,
+          430
+        ]
+      },
+      {
+        "start": 13,
+        "position": [
+          875,
+          490
+        ]
+      },
+      {
+        "start": 18,
+        "position": [
+          965,
+          490
+        ]
+      }
+    ],
+    "lore_status": "N",
+    "dialogue": "sena"
+  },
+  "lior": {
+    "name": "Lior",
+    "age": 32,
+    "pronouns": "ele",
+    "color": "#a7ad83",
+    "home": "Arquivo",
+    "schedule": [
+      {
+        "start": 6,
+        "position": [
+          610,
+          190
+        ]
+      },
+      {
+        "start": 13,
+        "position": [
+          710,
+          470
+        ]
+      },
+      {
+        "start": 18,
+        "position": [
+          595,
+          490
+        ]
+      }
+    ],
+    "lore_status": "N",
+    "dialogue": "lior"
+  },
+  "tovan": {
+    "name": "Tovan",
+    "age": 38,
+    "pronouns": "ele",
+    "color": "#b38c9f",
+    "home": "Casa do Degrau",
+    "schedule": [
+      {
+        "start": 6,
+        "position": [
+          355,
+          450
+        ]
+      },
+      {
+        "start": 13,
+        "position": [
+          870,
+          465
+        ]
+      },
+      {
+        "start": 18,
+        "position": [
+          525,
+          470
+        ]
+      }
+    ],
+    "lore_status": "N",
+    "dialogue": "tovan"
+  },
+  "neri": {
+    "name": "Neri",
+    "age": 58,
+    "pronouns": "ela",
+    "color": "#c3aa76",
+    "home": "Venda da Margem",
+    "schedule": [
+      {
+        "start": 6,
+        "position": [
+          840,
+          200
+        ]
+      },
+      {
+        "start": 13,
+        "position": [
+          845,
+          205
+        ]
+      },
+      {
+        "start": 18,
+        "position": [
+          735,
+          490
+        ]
+      }
+    ],
+    "lore_status": "N",
+    "dialogue": "neri"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "spore": {
+    "name": "Esporos de fungo-lanterna",
+    "price": 8,
+    "sell": 2,
+    "kind": "seed"
+  },
+  "root_seed": {
+    "name": "Mudas de raiz-de-vidro",
+    "price": 6,
+    "sell": 2,
+    "kind": "seed"
+  },
+  "fungus": {
+    "name": "Fungo-lanterna",
+    "price": 22,
+    "sell": 16,
+    "kind": "food"
+  },
+  "root": {
+    "name": "Raiz-de-vidro",
+    "price": 18,
+    "sell": 12,
+    "kind": "food"
+  },
+  "fish": {
+    "name": "Truta-de-fio",
+    "price": 18,
+    "sell": 12,
+    "kind": "food"
+  },
+  "silverfish": {
+    "name": "Sonda-prateada",
+    "price": 28,
+    "sell": 20,
+    "kind": "food"
+  },
+  "fiber": {
+    "name": "Fibra-de-alga",
+    "price": 8,
+    "sell": 4,
+    "kind": "material"
+  },
+  "stone": {
+    "name": "Pedra de margem",
+    "price": 6,
+    "sell": 3,
+    "kind": "material"
+  },
+  "moss": {
+    "name": "Musgo-de-brasa",
+    "price": 8,
+    "sell": 5,
+    "kind": "material"
+  },
+  "quartz": {
+    "name": "Quartzo de leitura",
+    "price": 24,
+    "sell": 14,
+    "kind": "material"
+  },
+  "soup": {
+    "name": "Caldo de margem",
+    "price": 34,
+    "sell": 26,
+    "kind": "food"
+  },
+  "seal": {
+    "name": "Estojo de evidência",
+    "price": 0,
+    "sell": 0,
+    "kind": "equipment"
+  },
+  "tag": {
+    "name": "Etiqueta da calha",
+    "price": 0,
+    "sell": 0,
+    "kind": "evidence"
+  }
+}

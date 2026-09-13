@@ -1,0 +1,13 @@
+{
+  "neri": {
+    "name": "Venda da Margem",
+    "stock": {
+      "spore": 12,
+      "root_seed": 12,
+      "moss": 10,
+      "fiber": 10,
+      "stone": 10,
+      "quartz": 4
+    }
+  }
+}

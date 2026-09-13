@@ -1,0 +1,18 @@
+{
+  "lantern": {
+    "name": "Fungo-lanterna",
+    "seed": "spore",
+    "yield_item": "fungus",
+    "days": 2,
+    "yield": 2,
+    "warm": true
+  },
+  "glassroot": {
+    "name": "Raiz-de-vidro",
+    "seed": "root_seed",
+    "yield_item": "root",
+    "days": 3,
+    "yield": 2,
+    "warm": false
+  }
+}

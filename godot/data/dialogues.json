@@ -1,0 +1,104 @@
+{
+  "dena": {
+    "normal": "A calha é velha, mas a casa é sua enquanto cuidar dela. Três fibras e duas pedras resolvem o primeiro vazamento.",
+    "anomaly": "Se a parede insiste em voltar ao mesmo lugar, o problema não é o seu martelo.",
+    "resolved": "A vila continua. Hoje eu quero que isso seja uma coisa boa.",
+    "choices": [
+      {
+        "text": "Posso aprender com você.",
+        "response": "Obrigada por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 2
+      },
+      {
+        "text": "Quero fazer tudo sozinho.",
+        "response": "Obrigada por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 0
+      }
+    ]
+  },
+  "ivo": {
+    "normal": "Chegou com fome? Todo mundo chega. Há uma bancada na sua casa. Peixe e fungo fazem um caldo honesto.",
+    "anomaly": "Fiz seis tigelas. A prateleira tem cinco marcas. Eu podia jurar que tinha seis.",
+    "resolved": "A vila continua. Hoje eu quero que isso seja uma coisa boa.",
+    "choices": [
+      {
+        "text": "Quando fechar, você também descansa?",
+        "response": "Obrigado por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 2
+      },
+      {
+        "text": "Só quero saber quanto isso vende.",
+        "response": "Obrigado por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 0
+      }
+    ]
+  },
+  "sena": {
+    "normal": "Eu desenho as margens. Elas nunca ficam exatamente onde estavam. A placa do cais, pelo menos, devia ficar.",
+    "anomaly": "A placa dizia Calha 3. Agora diz Calha 8. Você também percebeu?",
+    "resolved": "A vila continua. Hoje eu quero que isso seja uma coisa boa.",
+    "choices": [
+      {
+        "text": "Vou registrar o que vi.",
+        "response": "Obrigada por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 2
+      },
+      {
+        "text": "Deve ser só cansaço seu.",
+        "response": "Obrigada por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 0
+      }
+    ]
+  },
+  "lior": {
+    "normal": "Se assumir a casa, assuma também um caderno. Anote o que mudar. Nem toda diferença merece confiança imediata.",
+    "anomaly": "Tenho duas listas corretas que discordam entre si. Preciso de uma terceira fonte, não de uma voz mais alta.",
+    "resolved": "A vila continua. Hoje eu quero que isso seja uma coisa boa.",
+    "choices": [
+      {
+        "text": "Quem escreveu cada versão?",
+        "response": "Obrigado por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 2
+      },
+      {
+        "text": "Escolha logo uma versão.",
+        "response": "Obrigado por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 0
+      }
+    ]
+  },
+  "tovan": {
+    "normal": "Deixei uma ferramenta na galeria. Não leve nada que pareça segurar o teto. Na dúvida, volte e me chame.",
+    "anomaly": "Na galeria, depois do regulador, o som é diferente. Como se alguém tivesse deixado espaço para um último toque.",
+    "resolved": "A vila continua. Hoje eu quero que isso seja uma coisa boa.",
+    "choices": [
+      {
+        "text": "Você vem comigo quando puder?",
+        "response": "Obrigado por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 2
+      },
+      {
+        "text": "Se quebrar, depois a gente resolve.",
+        "response": "Obrigado por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 0
+      }
+    ]
+  },
+  "neri": {
+    "normal": "Sementes à esquerda, chá à direita. Crédito a gente conversa. A loja fica no telhado verde, atrás de mim.",
+    "anomaly": "Troquei o pano da banca ontem. Este remendo era do pano antigo. Vou guardar os dois recibos.",
+    "resolved": "A vila continua. Hoje eu quero que isso seja uma coisa boa.",
+    "choices": [
+      {
+        "text": "Quero conhecer quem vive aqui.",
+        "response": "Obrigada por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 2
+      },
+      {
+        "text": "Preciso só dos seus melhores preços.",
+        "response": "Obrigada por ouvir. Amanhã ainda teremos trabalho — e assunto.",
+        "trust": 0
+      }
+    ]
+  }
+}
