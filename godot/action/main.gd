@@ -231,6 +231,7 @@ func toast(message:String):toast_text=message;toast_timer=4.5
 func close_modal():
 	modal=false;hud.hide_panel();touch.release_all();camera.offset=Vector2.ZERO
 func apply_preferences():
+	preferences.zoom=clampf(preferences.zoom,preferences.MIN_ZOOM,preferences.MAX_ZOOM)
 	camera.zoom=Vector2.ONE*preferences.zoom
 	sound.apply_volumes();preferences.save_settings();hud.layout_controls();touch.layout_controls()
 func _notification(what):

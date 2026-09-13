@@ -338,7 +338,7 @@ func gameplay_core_rect()->Rect2:
 func settings_menu(from_title=false):
 	open_panel('Do seu jeito','settings')
 	paragraph('Ajuste a distância da câmera e a leitura na sua tela.',MUTE)
-	slider_row('CÂMERA',game.preferences.zoom,1.15,1.8,.05,func(v):game.preferences.zoom=v;game.apply_preferences(),true)
+	slider_row('CÂMERA',game.preferences.zoom,game.preferences.MIN_ZOOM,game.preferences.MAX_ZOOM,.05,func(v):game.preferences.zoom=v;game.apply_preferences(),true)
 	slider_row('MÚSICA',game.preferences.music_volume,0,1,.05,func(v):game.preferences.music_volume=v;game.state.muted=false;game.apply_preferences())
 	slider_row('EFEITOS',game.preferences.effects_volume,0,1,.05,func(v):game.preferences.effects_volume=v;game.state.muted=false;game.apply_preferences())
 	action('TEXTO GRANDE  ·  '+('SIM' if game.preferences.large_text else 'NÃO'),func():game.preferences.large_text=not game.preferences.large_text;game.apply_preferences();settings_menu(from_title))

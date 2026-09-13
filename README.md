@@ -1,3 +1,5 @@
+> **Série 2.0 — candidata 2.0-camera.1**, versionCode 14, ramo `release/2.0-camera`. Leia primeiro [20_CAMERA_200.md](docs/20_CAMERA_200.md). Aguardando teste físico. O conteúdo abaixo registra a base 1.0.4.
+
 # Entre Margens — A Travessia Sem Nome
 
 > **LEIA ISTO PRIMEIRO — ESTADO CANÔNICO**  
