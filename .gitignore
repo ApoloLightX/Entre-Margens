@@ -1,4 +1,12 @@
-godot/.godot/\n*.apk\n*.mp4\n*.zip\n*.idsig\n
+godot/.godot/
+*.import
+*.uid
+*.apk
+*.mp4
+*.avi
+*.zip
+*.idsig
 development/
 *.keystore
 *.jks
+qa/captures/

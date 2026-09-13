@@ -13,6 +13,7 @@ var buttons:Dictionary={}
 var press_flash={'attack':0.0,'cast':0.0,'dodge':0.0}
 const Icons=preload('res://action/icons.gd')
 const JOYSTICK_HIT_PADDING=12.0
+const ACTION_HIT_PADDING=6.0
 const KNOB_TRAVEL_RATIO=.8
 const KNOB_RADIUS_RATIO=.4
 const DIRECTION_MARKER_INNER_RATIO=2.0/3.0
@@ -52,7 +53,7 @@ func _input(event):
 				move_finger=event.index;update_stick(event.position);get_viewport().set_input_as_handled();return
 			for action in buttons:
 				var b=buttons[action]
-				if event.position.distance_to(Vector2(b.x,b.y))<b.z+6:
+				if event.position.distance_to(Vector2(b.x,b.y))<b.z+ACTION_HIT_PADDING:
 					action_fingers[event.index]=action
 					if action=='attack':attack_held=true
 					trigger(action);get_viewport().set_input_as_handled();return

@@ -35,24 +35,23 @@ const INK=Color('#e6e9e2')
 const MUTE=Color('#a6b8bb')
 const GOLD=Color('#e5b77a')
 const ICE=Color('#92d6d7')
-# Fixed padding INSIDE preferences.safe_rect(). The default safe rect already
-# contributes 24 px horizontally / 16 px vertically, preserving the previous
-# effective Figma margins of 28 / 32 / 28 at the 960x540 design size.
+# Padding inside the device safe rect also contains the expanded touch targets.
 const MARGIN_HUD_TOP=16.0
-const MARGIN_HUD_SIDE=4.0
+const MARGIN_HUD_SIDE=12.0
 const MARGIN_HUD_BOTTOM=12.0
 const GAP_BUTTONS=12.0
+const GAP_ACTIONS=20.0
 const GAP_TOP=8.0
 const GAP_DIALOG_CONTROLS=16.0
-const JOYSTICK_DIAMETER=120.0
-const ACTION_DIAMETER=72.0
+const JOYSTICK_DIAMETER=132.0
+const ACTION_DIAMETER=88.0
 const STATUS_SIZE=Vector2(276,76)
 const HEAL_SIZE=Vector2(144,50)
 const INTERACTION_SIZE=Vector2(520,64)
 const NOTICE_SIZE=Vector2(476,54)
 const TOP_ACTION_HEIGHT=50.0
 const TOP_ACTION_WIDTHS=[150.0,112.0,96.0,48.0]
-const TOUCH_GRID_SIZE=ACTION_DIAMETER*2.0+GAP_BUTTONS
+const TOUCH_GRID_SIZE=ACTION_DIAMETER*2.0+GAP_ACTIONS
 const TOP_LEFT_STACK_HEIGHT=STATUS_SIZE.y+GAP_BUTTONS+HEAL_SIZE.y
 const NOTICE_DEFAULT_TOP=STATUS_SIZE.y+GAP_BUTTONS
 const BOSS_BAR_OFFSET_Y=78.0
@@ -103,7 +102,7 @@ func _ready():
 	# touch renderer/input. touch.gd never computes viewport positions itself.
 	joystick_anchor=Control.new();joystick_anchor.name='JoystickBottomLeft';joystick_anchor.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud_bounds.add_child(joystick_anchor)
 	_anchor_bottom_left(joystick_anchor,Vector2(JOYSTICK_DIAMETER,JOYSTICK_DIAMETER),0,0)
-	action_grid=GridContainer.new();action_grid.name='ActionsBottomRight';action_grid.columns=2;action_grid.mouse_filter=Control.MOUSE_FILTER_IGNORE;action_grid.add_theme_constant_override('h_separation',int(GAP_BUTTONS));action_grid.add_theme_constant_override('v_separation',int(GAP_BUTTONS));hud_bounds.add_child(action_grid)
+	action_grid=GridContainer.new();action_grid.name='ActionsBottomRight';action_grid.columns=2;action_grid.mouse_filter=Control.MOUSE_FILTER_IGNORE;action_grid.add_theme_constant_override('h_separation',int(GAP_ACTIONS));action_grid.add_theme_constant_override('v_separation',int(GAP_ACTIONS));hud_bounds.add_child(action_grid)
 	_anchor_bottom_right(action_grid,Vector2(TOUCH_GRID_SIZE,TOUCH_GRID_SIZE),0,0)
 	var empty_anchor=Control.new();empty_anchor.name='ActionGridSpacer';empty_anchor.custom_minimum_size=Vector2.ONE*ACTION_DIAMETER;empty_anchor.mouse_filter=Control.MOUSE_FILTER_IGNORE;action_grid.add_child(empty_anchor)
 	dodge_anchor=_touch_cell('DodgeAnchor');action_grid.add_child(dodge_anchor)

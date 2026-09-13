@@ -1,5 +1,6 @@
 extends Node2D
 var game
+var spell_visuals=preload('res://action/spell_visuals.gd').new()
 var font=preload("res://assets/action/body.ttf")
 const AMBER=Color("#efb76d")
 const ICE=Color('#9edbdd')
@@ -62,13 +63,7 @@ func _draw():
 				draw_arc(fx.pos,88 if fx.strong else 75,sweep,sweep+1.45,14,Color(IVORY,alpha),6 if fx.strong else 3)
 				if fx.strong:draw_arc(fx.pos,82,sweep+.2,sweep+1.2,12,Color(AMBER,alpha*.65),2)
 			'cordao':
-				var radius=float(fx.radius);var close=clampf(phase*3.0,0,1);var half=PI*.5*close
-				draw_arc(fx.pos,radius,0,TAU,72,Color(FROST_EDGE,alpha*.72),7);draw_arc(fx.pos,radius,0,TAU,72,Color(CORDON_ICE,alpha*.24),4)
-				draw_arc(fx.pos,radius,-PI*.5-half,-PI*.5+half,36,Color(CORDON_CORE,alpha),3);draw_arc(fx.pos,radius,PI*.5-half,PI*.5+half,36,Color(CORDON_ICE,alpha*.95),3)
-				for i in range(10):
-					var dir=Vector2.from_angle(i*TAU/10+.16);var side=dir.orthogonal();var p=fx.pos+dir*(radius+(1-close)*18)
-					var shard=PackedVector2Array([p+dir*7,p-side*4,p-dir*5,p+side*3])
-					draw_colored_polygon(shard,Color(CORDON_CORE,alpha*.88));draw_line(p-dir*5,p+dir*7,Color(FROST_EDGE,alpha*.58),1)
+				spell_visuals.paint(self,fx,game.preferences.reduced_motion)
 			'dash':
 				for side in [-1,1]:
 					var p=fx.pos+fx.dir.orthogonal()*side*13
@@ -77,32 +72,9 @@ func _draw():
 				for i in range(3):
 					var q=fx.pos-fx.dir*(14+phase*(22+i*13));var side=fx.dir.orthogonal()*(8+i*3);draw_line(q-side,q+side,Color(CORDON_CORE,alpha*(.30-i*.06)),1)
 			'fratura':
-				var side=fx.dir.orthogonal();var travel=clampf(phase*2.7,0,1);var offsets=[0.0,-9.0,12.0,-13.0,8.0,-15.0,10.0,-7.0,0.0]
-				var points=PackedVector2Array();var segments=maxi(1,int(ceil(travel*8.0)))
-				for i in range(segments+1):
-					var t=minf(travel,float(i)/8.0);points.append(fx.pos+fx.dir*(410.0*t)+side*offsets[mini(i,8)]*minf(1,t*2.5))
-				if points.size()>1:
-					draw_polyline(points,Color(FROST_EDGE,alpha*.86),9);draw_polyline(points,Color(FRACTURE_BLUE,alpha*.92),5);draw_polyline(points,Color(FRACTURE_CORE,alpha),2)
-				for i in [2,4,6,8]:
-					var t=float(i)/8.0
-					if t>travel:continue
-					var p=fx.pos+fx.dir*(410.0*t)+side*offsets[i]
-					draw_line(p,p+side*(14+i%3*3)+fx.dir*7,Color(FROST_EDGE,alpha*.74),4);draw_line(p,p+side*(14+i%3*3)+fx.dir*7,Color(FRACTURE_CORE,alpha*.9),2)
-					draw_line(p,p-side*(10+i%2*4)-fx.dir*5,Color(FRACTURE_BLUE,alpha*.86),2)
-				if points.size()>1 and travel>.72:
-					var tip=points[points.size()-1]
-					for i in range(5):
-						var ray=fx.dir.rotated((i-2)*.42);draw_line(tip+ray*3,tip+ray*(12+phase*12),Color(FRACTURE_CORE,alpha*.82),2)
+				spell_visuals.paint(self,fx,game.preferences.reduced_motion)
 			'contrapeso':
-				var settle=clampf(phase*4.0,0,1);var center=fx.pos+Vector2(0,-42)
-				var shell=PackedVector2Array([fx.pos+Vector2(-24,-8),fx.pos+Vector2(-33,-43),fx.pos+Vector2(-20,-77),fx.pos+Vector2(0,-91),fx.pos+Vector2(20,-77),fx.pos+Vector2(33,-43),fx.pos+Vector2(24,-8),fx.pos+Vector2(0,5)])
-				var closed=shell.duplicate();closed.append(shell[0])
-				draw_colored_polygon(shell,Color(COUNTER_ICE,alpha*.09*settle));draw_polyline(closed,Color(FROST_EDGE,alpha*.88),7);draw_polyline(closed,Color(COUNTER_SILVER,alpha*.96),3)
-				for i in range(4):
-					var y=-18-i*17;var span=20+i*2
-					draw_line(fx.pos+Vector2(-span,y),fx.pos+Vector2(-span+7,y-8),Color(COUNTER_ICE,alpha*.75*settle),2)
-					draw_line(fx.pos+Vector2(span,y),fx.pos+Vector2(span-7,y-8),Color(COUNTER_ICE,alpha*.75*settle),2)
-				draw_line(center+Vector2(-12,0),center+Vector2(12,0),Color(COUNTER_ICE,alpha*.34*settle),2)
+				spell_visuals.paint(self,fx,game.preferences.reduced_motion)
 			'contrapeso_break':
 				var center=fx.pos+Vector2(0,-42)
 				for i in range(10):
