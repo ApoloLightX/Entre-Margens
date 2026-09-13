@@ -1,11 +1,6 @@
-> **Série 2.0 — candidata 2.0-camera.1**, versionCode 14, ramo `release/2.0-camera`. Leia primeiro [20_CAMERA_200.md](docs/20_CAMERA_200.md). Aguardando teste físico. O conteúdo abaixo registra a base 1.0.4.
-
 # Entre Margens — A Travessia Sem Nome
 
-> **LEIA ISTO PRIMEIRO — ESTADO CANÔNICO**  
-> Build atual: **1.0.4 Layout Review** · Godot **4.5.1** · Android **landscape-only** · `versionCode 13`.  
-> O branch `main` é a fonte pública atual. Branches `release/*` e documentos antigos são históricos.  
-> Se sua ferramenta só consegue ler o README do GitHub, este arquivo foi escrito para ser autocontido. Para ainda mais contexto em texto puro, leia `AI_CONTEXT.txt`.
+> **Candidata atual: 2.0-polish.2**, versionCode **15**, ramo `release/2.0-polish`. Godot **4.5.1**, Android horizontal. Leia [21_POLIMENTO_200.md](docs/21_POLIMENTO_200.md) e [20_CAMERA_200.md](docs/20_CAMERA_200.md) primeiro. O ramo `main` ainda contém um snapshot anterior. A candidata aguarda playtest físico no POCO F7; capturas e testes não equivalem à aprovação de conforto.
 
 ## Estado atual
 
@@ -22,12 +17,12 @@
 
 A campanha atual tem **6 áreas, 16 encontros, 24 ondas e 2 desfechos**. O combate usa ataque corpo a corpo, esquiva, cura e três técnicas: **Cordão, Fratura e Contrapeso**. O chefe principal é o **Regulador**.
 
-## Regra de ouro para outra IA
+## Ordem de leitura para manutenção
 
 Antes de alterar o projeto:
 
 1. leia este README e `AI_CONTEXT.txt`;
-2. leia `docs/19_LAYOUT_RESPONSIVO_REVIEW_104.md` para HUD/touch;
+2. leia `docs/21_POLIMENTO_200.md`, `docs/20_CAMERA_200.md` e `docs/19_LAYOUT_RESPONSIVO_REVIEW_104.md` para apresentação/câmera/HUD;
 3. leia `docs/17_POLIMENTO_GERAL_103.md`, `docs/16_LAYOUT_HORIZONTAL_102.md`, `docs/15_POLIMENTO_101.md` e `docs/14_POLIMENTO_100.md` quando a tarefa tocar apresentação/combate;
 4. leia `docs/01_BIBLIA_DE_LORE.md` e `docs/09_REDESIGN_ACTION_RPG.md` antes de mudar cânone/conteúdo;
 5. nunca editar `.gdc`; trabalhar nos `.gd` fonte;
@@ -45,7 +40,8 @@ godot/action/
   hud.gd           HUD e ÚNICA autoridade de layout responsivo
   touch.gd         input touch; recebe geometria pronta do HUD
   combat.gd        combate
-  effects.gd       VFX manuais
+  effects.gd       VFX manuais e integração de técnicas
+  spell_visuals.gd camadas de gelo com gradiente radial compartilhado
   actor.gd         apresentação do jogador/NPCs
   machine.gd       máquinas/inimigos
   scenery.gd       cenário
@@ -91,7 +87,7 @@ Não reintroduzir um segundo cálculo independente em `touch.gd`.
 
 ## Resolução / pixel art
 
-`godot/project.godot` usa viewport base `960x540`, `canvas_items`, `expand`, filtro Nearest e renderer Compatibility. Valores como `ACTION_DIAMETER = 72` são **unidades lógicas**, não 72 pixels físicos do aparelho.
+`godot/project.godot` usa viewport base `960x540`, `canvas_items`, `expand`, filtro Nearest e renderer Compatibility. Valores como `ACTION_DIAMETER = 88` são **unidades lógicas**, não 88 pixels físicos do aparelho.
 
 O produto é landscape-only. Retrato existe apenas como stress test arquitetural.
 
@@ -111,11 +107,11 @@ As três identidades visuais são distintas. Não reutilizar um mesmo efeito gen
 - **1.0.2:** jogo passa a ser landscape-only; menu principal e HUD horizontal.
 - **1.0.3:** polimento geral visual/sonoro; sem rebalanceamento.
 - **1.0.3 Layout Anchors:** primeira migração de anchors; histórica/superseded.
-- **1.0.4 Layout Review:** arquitetura final de HUD/touch; build canônica.
+- **1.0.4 Layout Review:** arquitetura final de HUD/touch; base anterior à série 2.0.
 
 ## Testes da 1.0.4
 
-Última suíte completa validada — incluindo a reconstrução exata do conteúdo público com seus assets:
+Suíte histórica da base — incluindo a reconstrução exata do conteúdo público com seus assets:
 
 ```text
 run_tests.gd          38/38
@@ -145,8 +141,8 @@ a875ff60d8827d6e37a550bda3a8dfdc0c2f3962f6b7d9af2ec0279af78603fe
 Preset canônico:
 
 ```text
-versionName: 1.0.4
-versionCode: 13
+versionName: 2.0-polish.2
+versionCode: 15
 package: com.entremargens.prototype
 minSdk: 24
 targetSdk: 35

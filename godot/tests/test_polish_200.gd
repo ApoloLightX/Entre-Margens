@@ -16,6 +16,10 @@ func run():
 	for dims in [Vector2i(960,540),Vector2i(1170,540),Vector2i(1200,540),Vector2i(2772,1280)]:
 		root.size=dims;await settle()
 		var safe=game.preferences.safe_rect(root)
+		for technique in ['cordao','fratura','contrapeso']:
+			game.state.technique=technique;game.hud.update_status();await settle()
+			for b in game.hud.top_buttons:
+				check(safe.encloses(b.get_global_rect()),'top action remains safe '+technique+' '+str(dims))
 		var t=game.touch
 		var jr=t.joystick_radius+t.JOYSTICK_HIT_PADDING
 		check(safe.encloses(Rect2(t.origin-Vector2.ONE*jr,Vector2.ONE*jr*2)),'joystick hit area stays inside safe bounds '+str(dims))

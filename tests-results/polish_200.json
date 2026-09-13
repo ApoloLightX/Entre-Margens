@@ -1,0 +1,60 @@
+[
+  {
+    "test": "run_tests",
+    "exit": 0,
+    "output": [
+      "RESULT: 38 checks, 0 failures"
+    ]
+  },
+  {
+    "test": "test_action",
+    "exit": 0,
+    "output": [
+      "ACTION TESTS 230/230 passed"
+    ]
+  },
+  {
+    "test": "test_action_draw",
+    "exit": 0,
+    "output": [
+      "DRAW_CALLBACKS 54 expected at least 18 across six areas"
+    ]
+  },
+  {
+    "test": "test_mobile_ui",
+    "exit": 0,
+    "output": [
+      "RESULT: 137 MOBILE UI checks, 0 failures",
+      "ERROR: 4 resources still in use at exit (run with --verbose for details)."
+    ]
+  },
+  {
+    "test": "test_polish",
+    "exit": 0,
+    "output": [
+      "POLISH TESTS 68/68 passed",
+      "ERROR: 18 resources still in use at exit (run with --verbose for details)."
+    ]
+  },
+  {
+    "test": "test_presentation",
+    "exit": 0,
+    "output": [
+      "PRESENTATION TESTS 87/87 passed"
+    ]
+  },
+  {
+    "test": "test_camera",
+    "exit": 0,
+    "output": [
+      "CAMERA TESTS 93/93 passed"
+    ]
+  },
+  {
+    "test": "test_polish_200",
+    "exit": 0,
+    "output": [
+      "POLISH 200 TESTS 116/116 passed"
+    ]
+  }
+]

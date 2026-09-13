@@ -76,6 +76,10 @@ func _ready():
 	var icon_ids=['cordao','diary','map','pause']
 	for i in range(actions.size()):
 		var b=button(actions[i][0],actions[i][1]);b.icon=Icons.texture(icon_ids[i]);b.add_theme_constant_override('icon_max_width',23);b.add_theme_color_override('icon_normal_color',ICE);b.custom_minimum_size=Vector2(TOP_ACTION_WIDTHS[i],TOP_ACTION_HEIGHT);top_action_bar.add_child(b);top_buttons.append(b)
+	# Reserve the longest technique label before anchoring the bar.
+	top_buttons[0].text='CONTRAPESO'
+	top_buttons[0].custom_minimum_size.x=top_buttons[0].get_combined_minimum_size().x
+	top_buttons[0].text='CORDÃO'
 	top_buttons[3].text='';top_buttons[3].tooltip_text='Pausa'
 	var top_actions_size=top_action_bar.get_combined_minimum_size();_anchor_top_right(top_action_bar,Vector2(top_actions_size.x,TOP_ACTION_HEIGHT),0,0)
 	context_box=PanelContainer.new();context_box.name='InteractionDock';context_box.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud_bounds.add_child(context_box)
