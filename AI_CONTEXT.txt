@@ -1,3 +1,6 @@
+ESTADO ATUAL — 2.1-polish.1 / versionCode 16 / work/2.1-polish
+Leia docs/23_POLIMENTO_210.md. Base 2.0-polish.2 aprovada no POCO F7. Candidata 2.1 aguarda playtest próprio; APK exportado e verificado. Fratura no chão e dois pilotos locais, sem mudança mecânica. O conteúdo abaixo é contexto histórico da arquitetura 1.0.4; as referências a versão, ramo e dimensões de controles são antigas. HUD atual: ações 88, joystick 132.
+
 ENTRE MARGENS — CONTEXTO CANÔNICO PARA IA / COLABORADOR
 
 LEIA ESTE ARQUIVO ATÉ O FIM ANTES DE SUGERIR MUDANÇAS.

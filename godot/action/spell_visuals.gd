@@ -26,7 +26,6 @@ func paint(canvas:Node2D,fx:Dictionary,reduced:bool):
 	var phase=1-alpha
 	match fx.kind:
 		'cordao':cordon(canvas,fx,phase,alpha,reduced)
-		'fratura':fracture(canvas,fx,phase,alpha,reduced)
 		'contrapeso':counterweight(canvas,fx,phase,alpha,reduced)
 func cordon(c:Node2D,fx:Dictionary,phase:float,alpha:float,reduced:bool):
 	var radius=float(fx.radius)
@@ -49,39 +48,6 @@ func cordon(c:Node2D,fx:Dictionary,phase:float,alpha:float,reduced:bool):
 		if not reduced:
 			var drift=fx.pos+ray*(radius-8+phase*20)-Vector2(0,phase*(18+i%3*6))
 			c.draw_rect(Rect2(drift,Vector2(2,3)),Color(WHITE,alpha*.7))
-func fracture(c:Node2D,fx:Dictionary,phase:float,alpha:float,reduced:bool):
-	var dir:Vector2=fx.dir;var side=dir.orthogonal()
-	var travel=1.0 if reduced else clampf(phase*3.5,0,1)
-	var offsets=[0,-9,12,-13,8,-15,10,-7,0]
-	var points=PackedVector2Array()
-	for i in range(9):
-		var t=minf(travel,float(i)/8)
-		points.append(fx.pos+dir*(410*t)+side*offsets[i]*minf(1,t*2.5))
-		if float(i)/8>=travel:break
-	# A narrow textured wake, kept inside the technique's existing corridor.
-	for i in range(1,9):
-		var t=float(i)/8
-		if t>travel:continue
-		var p=fx.pos+dir*(410*t)+side*offsets[i]
-		halo(c,p,Vector2(72,48),Color(BLUE_CORE,alpha*.4))
-	if points.size()>1:
-		c.draw_polyline(points,Color(EDGE,alpha*.92),11)
-		c.draw_polyline(points,Color(BLUE,alpha*.9),7)
-		c.draw_polyline(points,Color(BLUE_CORE,alpha),2)
-	for i in range(1,8):
-		var t=float(i)/8
-		if t>travel:continue
-		var emergence=1.0 if reduced else clampf((travel-t)*6,0,1)
-		var sign_side=-1 if i%2 else 1
-		var base=fx.pos+dir*(410*t)+side*(offsets[i]+sign_side*12)
-		var tip=Vector2.UP.rotated(dir.x*.3)
-		facet(c,base,tip,(14+i%3*5)*emergence,5,Color(BLUE_CORE,alpha*.92))
-		c.draw_line(base,base+side*sign_side*14-dir*7,Color(BLUE_CORE,alpha*.65),2)
-		if not reduced:
-			var speck=base+side*sign_side*phase*14-Vector2(0,phase*28)
-			c.draw_rect(Rect2(speck,Vector2(2,3)),Color(WHITE,alpha*.65))
-	if not reduced and points.size()>1:
-		halo(c,points[-1],Vector2(65,65),Color(WHITE,alpha*.48))
 func counterweight(c:Node2D,fx:Dictionary,phase:float,alpha:float,reduced:bool):
 	var center:Vector2=fx.pos+Vector2(0,-42)
 	var settle=1.0 if reduced else clampf(phase*6,0,1)

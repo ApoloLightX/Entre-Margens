@@ -8,6 +8,9 @@ var residents:Array=[]
 var machines:Dictionary={}
 var player
 var foreground
+var ground_effects
+var environment_polish=true
+const PILOT=preload("res://action/environment_pilot.gd")
 var route:Array=[]
 var tracks:Array=[]
 var last_step=Vector2.ZERO
@@ -22,12 +25,15 @@ func _ready():
 	terrain=ColorRect.new();terrain.mouse_filter=Control.MOUSE_FILTER_IGNORE;terrain.z_index=-4000
 	var mat=ShaderMaterial.new();mat.shader=preload('res://action/terrain.gdshader');mat.set_shader_parameter('paving',FLOOR);terrain.material=mat;add_child(terrain)
 	player=preload('res://action/actor.gd').new();player.configure('traveller');add_child(player)
+	ground_effects=preload('res://action/effects.gd').new();ground_effects.game=game;ground_effects.ground_only=true;ground_effects.z_index=-1;add_child(ground_effects)
 	foreground=preload('res://action/effects.gd').new();foreground.game=game;foreground.z_index=4000;add_child(foreground)
 func refresh():
 	for n in props+residents:n.queue_free()
 	for n in machines.values():n.queue_free()
 	props.clear();residents.clear();machines.clear();snow.clear();tracks.clear();route.clear()
 	var r=game.current_room();last_step=game.state.position
+	var sample=PILOT.region(r.id) if environment_polish else Rect2()
+	terrain.material.set_shader_parameter('pilot_rect',Vector4(sample.position.x,sample.position.y,sample.size.x,sample.size.y))
 	route.append(Vector2(r.spawn[0],r.spawn[1]))
 	for o in r.objects:
 		if o.id in r.required:route.append(Vector2(o.x,o.y))
@@ -50,7 +56,7 @@ func refresh():
 		if o.get('npc',false):
 			var n=preload('res://action/actor.gd').new();n.configure('dena' if 'dena' in o.id else ('sena' if 'sena' in o.id else 'lior'));n.set_meta('source',o);add_child(n);residents.append(n)
 func add_prop(p:Dictionary):
-	var n=preload('res://action/scenery.gd').new();n.data=p;n.cold=game.current_room().floor=='snow';n.position=Vector2(p.x,p.y).round();n.z_index=int(p.y);add_child(n);props.append(n)
+	var n=preload('res://action/scenery.gd').new();n.data=p;n.cold=game.current_room().floor=='snow';n.position=Vector2(p.x,p.y).round();n.z_index=int(p.y);n.polished=environment_polish and PILOT.region(game.current_room().id).has_point(n.position);add_child(n);props.append(n)
 func _process(dt):
 	if game==null or player==null:return
 	var c=game.combat
@@ -85,7 +91,7 @@ func _process(dt):
 		tracks.append({'pos':game.state.position,'time':clock,'dir':c.facing,'side':1 if tracks.size()%2 else -1})
 		last_step=game.state.position
 		if tracks.size()>28:tracks.pop_front()
-	foreground.queue_redraw();queue_redraw()
+	ground_effects.queue_redraw();foreground.queue_redraw();queue_redraw()
 func tile_at(tex:Texture2D,src:Rect2,dest:Rect2,tint=Color.WHITE):draw_texture_rect_region(tex,dest,src,tint)
 func road_distance(p:Vector2)->float:
 	var d=9999.0

@@ -1,0 +1,41 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+PASS: External references are valid
+PASS: Six independently addressable NPCs
+PASS: Purchase atomically exchanges currency for item
+PASS: Insufficient funds leave inventory and balance unchanged
+PASS: Full bag does not charge buyer
+PASS: Cold fungus remains dormant
+PASS: Repair consumes real materials and enables heat
+PASS: Repair bill paid once
+PASS: Warm wet fungus matures over two nights
+PASS: Harvest exchanges mature plot for produce
+PASS: Contract payout idempotent
+PASS: Repeated conversation cannot farm trust in one day
+PASS: First day is ordinary and can be documented
+PASS: Forage node cannot be harvested twice in a day
+PASS: Evidence case crafted from external recipe
+PASS: Chosen proof protected
+PASS: First anomaly triggered only after three nights
+PASS: Anomaly does not roll back inventory or economy
+PASS: Protected record retains earlier state
+PASS: Contradiction requires current observation plus independent source
+PASS: Anchored investigation permits local decision
+PASS: Resolution and reward cannot be repeated or silently overwritten
+PASS: Save written and validated
+PASS: Save round-trip preserves complete domain state
+PASS: Second save creates a backup
+PASS: Corrupt main save recovers valid previous backup
+PASS: Future schema rejected without reinterpretation
+PASS: Missed initial sign does not softlock investigation
+PASS: Unanchored record is altered by the anomaly
+PASS: Altered evidence cannot be retroactively treated as protected
+PASS: Daily fishing limit prevents seventh capture
+PASS: Unique artifact does not duplicate across catches
+PASS: Touch joystick captures one finger with a dead zone
+PASS: Second finger cannot steal the movement control
+PASS: Long touch drag clamps movement to normal speed
+PASS: Releasing another finger does not stop movement
+PASS: Releasing movement finger clears input
+PASS: Opening a menu or suspending clears held touch
+RESULT: 38 checks, 0 failures

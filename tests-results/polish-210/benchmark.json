@@ -1,0 +1,66 @@
+[
+  {
+    "draw_calls": 94,
+    "median_frame_ms": 16.165,
+    "nodes": 140,
+    "p95_frame_ms": 27.73,
+    "pilot": false,
+    "room": 0
+  },
+  {
+    "draw_calls": 113,
+    "median_frame_ms": 17.03,
+    "nodes": 140,
+    "p95_frame_ms": 29.761,
+    "pilot": true,
+    "room": 0
+  },
+  {
+    "draw_calls": 94,
+    "median_frame_ms": 17.223,
+    "nodes": 140,
+    "p95_frame_ms": 31.338,
+    "pilot": false,
+    "room": 0
+  },
+  {
+    "draw_calls": 113,
+    "median_frame_ms": 16.562,
+    "nodes": 140,
+    "p95_frame_ms": 34.277,
+    "pilot": true,
+    "room": 0
+  },
+  {
+    "draw_calls": 78,
+    "median_frame_ms": 18.406,
+    "nodes": 155,
+    "p95_frame_ms": 58.027,
+    "pilot": false,
+    "room": 1
+  },
+  {
+    "draw_calls": 101,
+    "median_frame_ms": 16.809,
+    "nodes": 155,
+    "p95_frame_ms": 40.13,
+    "pilot": true,
+    "room": 1
+  },
+  {
+    "draw_calls": 78,
+    "median_frame_ms": 18.303,
+    "nodes": 155,
+    "p95_frame_ms": 56.114,
+    "pilot": false,
+    "room": 1
+  },
+  {
+    "draw_calls": 101,
+    "median_frame_ms": 18.526,
+    "nodes": 155,
+    "p95_frame_ms": 30.495,
+    "pilot": true,
+    "room": 1
+  }
+]

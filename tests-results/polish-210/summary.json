@@ -1,0 +1,47 @@
+[
+  {
+    "test": "run_tests.gd",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "test": "test_action.gd",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "test": "test_action_draw.gd",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "test": "test_camera.gd",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "test": "test_mobile_ui.gd",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "test": "test_polish.gd",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "test": "test_polish_200.gd",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "test": "test_polish_210.gd",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "test": "test_presentation.gd",
+    "exit_code": 0,
+    "passed": true
+  }
+]

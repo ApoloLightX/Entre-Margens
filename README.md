@@ -1,6 +1,6 @@
 # Entre Margens — A Travessia Sem Nome
 
-> **Candidata atual: 2.0-polish.2**, versionCode **15**, ramo `release/2.0-polish`. Godot **4.5.1**, Android horizontal. Leia [21_POLIMENTO_200.md](docs/21_POLIMENTO_200.md) e [20_CAMERA_200.md](docs/20_CAMERA_200.md) primeiro. O ramo `main` ainda contém um snapshot anterior. A candidata aguarda playtest físico no POCO F7; capturas e testes não equivalem à aprovação de conforto.
+> **Candidata atual: 2.1-polish.1**, versionCode **16**, ramo `work/2.1-polish`. Godot **4.5.1**, Android horizontal. Leia [23_POLIMENTO_210.md](docs/23_POLIMENTO_210.md) e [22_DIAGNOSTICO_210.md](docs/22_DIAGNOSTICO_210.md) primeiro. A base **2.0-polish.2** foi aprovada fisicamente pelo autor no POCO F7; a candidata **2.1** aguarda novo playtest. APK exportado e verificado.
 
 ## Estado atual
 
@@ -141,8 +141,8 @@ a875ff60d8827d6e37a550bda3a8dfdc0c2f3962f6b7d9af2ec0279af78603fe
 Preset canônico:
 
 ```text
-versionName: 2.0-polish.2
-versionCode: 15
+versionName: 2.1-polish.1
+versionCode: 16
 package: com.entremargens.prototype
 minSdk: 24
 targetSdk: 35
@@ -168,7 +168,7 @@ Ainda não considerar como concluído sem teste real:
 
 ## Próxima prioridade recomendada
 
-1. Playtest físico no POCO F7 (`2772x1280`).
+1. Playtest físico da 2.1 no POCO F7 (`2772x1280`), com foco em Fratura e nos dois pilotos.
 2. Transformar essa resolução em regressão permanente de UI.
 3. Corrigir ergonomia apenas com evidência real do aparelho.
 4. Depois continuar polimento de sprites, inimigos e cenário.

@@ -32,3 +32,8 @@ Ler docs/21_POLIMENTO_200.md. A candidata atual é 2.0-polish.2, versionCode 15,
 HUD: ação 88, padding de hit 6, gap visual 20, joystick 132 e margem lateral 12. Testar o alvo inteiro, não somente o desenho. Reservar no HUD a largura do maior nome de técnica antes de ancorar a barra superior. Não mover cálculos de layout para touch.gd. dp depende de densidade lógica Android; não confundir resolução ou PPI físico com densidade medida.
 
 Após cada entrega importante, atualizar esta skill ou criar uma específica quando necessário, consultar skills relevantes e enviar SEMPRE vídeo de gameplay com áudio e ZIP completo além do APK. Usar qa/preview_polish_200.gd como referência de gravação no motor; identificar comandos simulados e nunca apresentar esse vídeo como playtest físico. Incluir fonte, assets, docs, testes e APK no ZIP; excluir caches, keystores e intermediários AVI. Confirmar assinatura e alinhamento do APK. Publicar fonte/skill no ramo de trabalho e informar que o teste físico está pendente até o autor avaliar.
+
+
+## Estado 2.1 — precedência sobre o histórico acima
+
+A base 2.0-polish.2 foi aprovada fisicamente pelo autor no POCO F7. Não reabrir a aprovação da câmera ou ergonomia dessa base. A candidata 2.1-polish.1 (versionCode 16) ainda requer playtest próprio. Ler docs/23_POLIMENTO_210.md; preservar piloto local e regras de combate. As quatro skills agora existem nos caminhos do repositório. Usar qa/preview_polish_210.gd para a entrega desta versão.

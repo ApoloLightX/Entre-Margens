@@ -1,5 +1,7 @@
 extends Node2D
 var game
+var ground_only=false
+const RUPTURE=preload("res://action/ice_rupture.gd")
 var spell_visuals=preload('res://action/spell_visuals.gd').new()
 var font=preload("res://assets/action/body.ttf")
 const AMBER=Color("#efb76d")
@@ -18,6 +20,10 @@ const METAL=Color('#b8c3c1')
 const HOSTILE=Color('#efaa70')
 func _draw():
 	if game==null:return
+	if ground_only:
+		for fx in game.combat.effects:
+			if fx.kind=='fratura':RUPTURE.paint(self,fx,game.preferences.reduced_motion)
+		return
 	for p in game.combat.projectiles:
 		draw_line(p.pos-p.velocity.normalized()*16,p.pos,AMBER,5);draw_circle(p.pos,5,Color('#fff3cb'))
 	for fx in game.combat.effects:
@@ -71,8 +77,7 @@ func _draw():
 					draw_line(p-fx.dir*(10+phase*40),p-fx.dir*phase*16,Color(ICE,alpha*.72),2)
 				for i in range(3):
 					var q=fx.pos-fx.dir*(14+phase*(22+i*13));var side=fx.dir.orthogonal()*(8+i*3);draw_line(q-side,q+side,Color(CORDON_CORE,alpha*(.30-i*.06)),1)
-			'fratura':
-				spell_visuals.paint(self,fx,game.preferences.reduced_motion)
+			'fratura':pass # Drawn once below actors by the ground pass.
 			'contrapeso':
 				spell_visuals.paint(self,fx,game.preferences.reduced_motion)
 			'contrapeso_break':

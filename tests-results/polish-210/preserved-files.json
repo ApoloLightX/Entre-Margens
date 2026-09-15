@@ -1,0 +1,37 @@
+[
+  {
+    "file": "godot/data/action/combat.json",
+    "sha256": "a875ff60d8827d6e37a550bda3a8dfdc0c2f3962f6b7d9af2ec0279af78603fe",
+    "identical_to_base": true
+  },
+  {
+    "file": "godot/data/action/campaign.json",
+    "sha256": "b00ef56f71b7cae9fd1be04834e340989e3053c39b176a0dfee73ff14b5b4c22",
+    "identical_to_base": true
+  },
+  {
+    "file": "godot/action/main.gd",
+    "sha256": "d04e550219246b38da9fc2a84de0301725b06d5116b4a2a2bd673734b44c02d4",
+    "identical_to_base": true
+  },
+  {
+    "file": "godot/action/hud.gd",
+    "sha256": "46e5f96f38d1b63a964fd89c0b8efd72713eaf61eca066f4ece4627a249c3476",
+    "identical_to_base": true
+  },
+  {
+    "file": "godot/action/touch.gd",
+    "sha256": "735a6b59eff2fd514aba9e5de0ccdabff50313eff4ce8ca77e73438c1ff71ed3",
+    "identical_to_base": true
+  },
+  {
+    "file": "godot/action/preferences.gd",
+    "sha256": "82e4b7fa88effd2a03c230443ee537d8d3fbd330ad089961b618df4392aedc3d",
+    "identical_to_base": true
+  },
+  {
+    "file": "godot/project.godot",
+    "sha256": "4d625a2465e1bf2d4f9dd6fab60b38b52fa56bb1143e3338b204c1f73735db7b",
+    "identical_to_base": true
+  }
+]

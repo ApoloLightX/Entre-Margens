@@ -1,0 +1,3 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+DRAW_CALLBACKS 54 expected at least 18 across six areas

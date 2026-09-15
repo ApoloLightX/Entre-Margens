@@ -114,10 +114,15 @@ func cast():
 		invulnerable=maxf(invulnerable,.23)
 		replace_technique_effect('cordao',{'kind':'cordao','pos':pos,'radius':155.0,'life':.42,'max':.42})
 	elif game.state.technique=='fratura':
+		var impact=pos+facing*205;var nearest=INF
 		for e in enemies:
 			var d=e.pos-pos;var forward=d.dot(facing)
-			if forward>0 and forward<410 and absf(d.cross(facing))<55:damage(e,float(s.damage),true,185,'ice')
-		replace_technique_effect('fratura',{'kind':'fratura','pos':pos,'dir':facing,'life':.35,'max':.35})
+			if forward>0 and forward<410 and absf(d.cross(facing))<55:
+				if forward<nearest:nearest=forward;impact=e.pos
+				damage(e,float(s.damage),true,185,'fracture')
+		var fx={'kind':'fratura','pos':pos,'dir':facing,'life':.52,'max':.52,'impact':impact}
+		fx.geometry=preload('res://action/ice_rupture.gd').geometry(impact,facing)
+		replace_technique_effect('fratura',fx)
 	else:
 		guard_time=float(s.duration);guard_ready=true
 		replace_technique_effect('contrapeso',{'kind':'contrapeso','pos':pos,'dir':facing,'life':guard_time,'max':guard_time})
@@ -142,7 +147,7 @@ func damage(e:Dictionary,amount:float,interrupt:bool,push=0.0,tone='metal'):
 	if interrupt and e.kind!='boss':e.state='recover';e.timer=1.1;e.stagger=1.1
 	if interrupt and e.kind=='boss' and e.state=='recover':e.timer=maxf(e.timer,1.3)
 	floating_text(e.pos+Vector2(0,-48),str(int(amount)))
-	effects.append({'kind':'impact','pos':e.pos+Vector2(0,-24),'dir':facing,'life':.22,'max':.22,'heavy':interrupt,'tone':tone})
+	if tone!='fracture':effects.append({'kind':'impact','pos':e.pos+Vector2(0,-24),'dir':facing,'life':.22,'max':.22,'heavy':interrupt,'tone':tone})
 func hurt(amount:float):
 	if invulnerable>0:return
 	if guard_time>0 and guard_ready:

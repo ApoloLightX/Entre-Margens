@@ -10,3 +10,5 @@ development/
 *.keystore
 *.jks
 qa/captures/
+
+tests-results/polish-210/user-data/

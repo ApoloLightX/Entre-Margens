@@ -6,6 +6,7 @@ uniform vec2 route[16];
 uniform int route_count=0;
 uniform bool outdoor=true;
 uniform bool archive=false;
+uniform vec4 pilot_rect=vec4(0.0);
 float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float line_distance(vec2 p,vec2 a,vec2 b){vec2 d=b-a;return length(p-a-d*clamp(dot(p-a,d)/max(dot(d,d),1.0),0.0,1.0));}
 void fragment(){
@@ -15,8 +16,22 @@ void fragment(){
 	vec2 local=mod(p,48.0)/48.0;
 	vec2 texpos=(vec2(80.0,0.0)+floor(local*16.0)+vec2(.5))/vec2(textureSize(paving,0));
 	vec3 stone=texture(paving,texpos).rgb;
+	float pilot=0.0;
+	if(pilot_rect.z>0.0){
+		vec2 border=min(p-pilot_rect.xy,pilot_rect.xy+pilot_rect.zw-p);
+		pilot=smoothstep(0.0,64.0,min(border.x,border.y));
+	}
+	if(pilot>0.0){
+		float variant=hash(floor(p/48.0));
+		vec2 varied=local;
+		if(variant<.333){varied=vec2(1.0-local.x,local.y);}
+		else if(variant<.667){varied=local.yx;}
+		vec2 sample_uv=(vec2(80.0,0.0)+clamp(floor(varied*16.0),vec2(0.0),vec2(15.0))+vec2(.5))/vec2(textureSize(paving,0));
+		stone=mix(stone,texture(paving,sample_uv).rgb,pilot*.8);
+	}
 	float grit=hash(floor(p/4.0));
 	vec3 snow=vec3(.66,.77,.81)+vec3((grit-.5)*.024);
+	snow+=vec3(-.015,-.006,.002)*pilot*(.5+.5*sin(p.x*.017+p.y*.027));
 	float edge=hash(floor(p/8.0))*12.0;
 	float path=1.0-smoothstep(53.0+edge,83.0+edge,d);
 	vec3 base=outdoor?mix(snow,stone*vec3(.88,.96,1.03),path):stone*vec3(.62,.75,.81);

@@ -4,6 +4,8 @@ var data:Dictionary={}
 var time=0.0
 var cold=true
 var animate=true
+var polished=false
+const PILOT=preload("res://action/environment_pilot.gd")
 const OVER=preload('res://assets/sprites/tiles/overworld.png')
 const DUNGEON=preload('res://assets/sprites/tiles/dungeon.png')
 const SNOW=preload('res://assets/sprites/tiles/snow.png')
@@ -15,9 +17,11 @@ func _draw():
 	if data.is_empty():return
 	var tile=int(data.tile);var w=float(data.size)
 	var tint=Color('#bdcdd1') if cold else Color('#b3c0bc')
-	draw_set_transform(Vector2.ZERO,0,Vector2(1,.38))
-	draw_circle(Vector2(0,-6),w*.27,Color(0.02,.055,.07,.25))
-	draw_set_transform(Vector2.ZERO)
+	if polished:PILOT.shadow(self,w,tile)
+	else:
+		draw_set_transform(Vector2.ZERO,0,Vector2(1,.38))
+		draw_circle(Vector2(0,-6),w*.27,Color(0.02,.055,.07,.25))
+		draw_set_transform(Vector2.ZERO)
 	match tile:
 		0,8:
 			var width=roundf(w/48)*48
@@ -33,12 +37,13 @@ func _draw():
 				draw_line(Vector2(x,-85),Vector2(x,-53),Color('#725a43'),3)
 				draw_line(Vector2(x-12,-69),Vector2(x+12,-69),Color('#725a43'),3)
 			piece(OVER,Rect2(176,480,16,16),Rect2(-22,-50,44,54),Color('#947152'))
+			if polished:PILOT.building(self,width)
 		1:
 			for x in [-w*.36,w*.36-48]:piece(DUNGEON,Rect2(0,0,16,32),Rect2(x,-118,48,128),tint)
 			piece(DUNGEON,Rect2(0,16,32,16),Rect2(-w*.4,-146,w*.8,48),tint)
 			piece(DUNGEON,Rect2(256+int(time*7)%4*16,144,16,16),Rect2(-18,-116,36,36),Color('#a3d5d0'))
 		2:
-			piece(TREES,Rect2(0,0,96,144),Rect2(-w*.36,-w*.98,w*.72,w*1.08),Color('#9bb6c6'))
+			piece(TREES,Rect2(96 if polished else 0,0,96,144),Rect2(-w*.36,-w*.98,w*.72,w*1.08),Color('#9bb6c6'))
 		3,6,9:
 			piece(DUNGEON,Rect2(0,0,16,32),Rect2(-30,-114,60,120),tint)
 			piece(DUNGEON,Rect2(80,80,16,16),Rect2(-36,-20,72,30),tint)
@@ -66,6 +71,7 @@ func _draw():
 		15:
 			piece(DUNGEON,Rect2(0,0,32,32),Rect2(-w*.3,-w*.55,w*.6,w*.6),tint)
 			piece(DUNGEON,Rect2(256+int(time*9)%8*16,144,16,16),Rect2(-45,-110,90,90),Color('#8abcbf'))
+	if polished:PILOT.prop_detail(self,tile)
 func _process(dt):
 	if animate and int(data.get('tile',0)) in [1,4,11,13,15]:
 		time+=dt;queue_redraw()

@@ -1,0 +1,22 @@
+{
+  "version": "2.1-polish.1",
+  "version_code": 16,
+  "apk_sha256": "652b727525fb35bc4642d8bef77fe1036a68ba632b020d7342a224b49401d4f5",
+  "bytes": 61301724,
+  "min_sdk": 24,
+  "target_sdk": 35,
+  "signature_schemes": [
+    "v2",
+    "v3"
+  ],
+  "certificate_sha256": "4e6086b767e78d9944a73a4e0e56a5b6c0f2f0cbd3c685af974e0039a28df18b",
+  "alignment_16_kib": true,
+  "zip_crc_valid": true,
+  "device_tested": false,
+  "modules": [
+    "assets/action/environment_pilot.gdc",
+    "assets/action/ice_rupture.gdc",
+    "assets/action/environment_pilot.gd.remap",
+    "assets/action/ice_rupture.gd.remap"
+  ]
+}
