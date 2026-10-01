@@ -151,8 +151,8 @@ func _path_strip(points:Array, width:float=5.2):
 		mat.metallic = 0.04
 		plate.material_override = mat
 		plate.position = mid
-		plate.look_at(b,Vector3.UP)
 		add_child(plate)
+		plate.look_at(b,Vector3.UP)
 
 func _beacon(pos:Vector3, label:String):
 	var root = Node3D.new()
