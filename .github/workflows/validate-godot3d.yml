@@ -20,6 +20,14 @@ jobs:
       - name: Godot version
         run: godot --version
       - name: Import and parse project
-        run: godot --headless --path godot3d --editor --quit
+        shell: bash
+        run: |
+          set -o pipefail
+          godot --headless --path godot3d --editor --quit 2>&1 | tee /tmp/godot-import.log
+          if grep -q "ERROR:" /tmp/godot-import.log; then exit 1; fi
       - name: Smoke-run main scene
-        run: godot --headless --path godot3d --quit-after 8
+        shell: bash
+        run: |
+          set -o pipefail
+          godot --headless --path godot3d --quit-after 8 2>&1 | tee /tmp/godot-smoke.log
+          if grep -q "ERROR:" /tmp/godot-smoke.log; then exit 1; fi
