@@ -27,6 +27,16 @@ func _physics_process(_dt):
 		game.cast("soco")
 		assert(target.hp == after)
 		game.player.position = Vector3(0,2,7)
+		game.focus = 100
+		game.cast("esquiva")
+		assert(game.dodge_time == 0.25)
+		assert(game.focus == 85)
+		game.cast("esquiva")
+		assert(game.focus == 85)
+		game.enemies[2].node.position = Vector3(0,0.4,-8)
+		game.enemies[2].timer = 0.01
+	if frames == 10:
+		assert(game.hostile_bolts.size() == 1)
 	if frames == 120:
 		assert(game.player.is_on_floor())
 		assert(game.player.position.y > 0)

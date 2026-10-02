@@ -10,6 +10,10 @@ var health := 100.0
 var active := false
 var won := false
 var guard := 0.0
+var dodge_time := 0.0
+var dodge_cooldown := 0.0
+var dodge_direction := Vector3.ZERO
+var hostile_bolts: Array[Dictionary] = []
 var cooldowns := {"lanca": 0.0, "onda": 0.0, "guarda": 0.0}
 var enemies: Array[Dictionary] = []
 var bolts: Array[Dictionary] = []
@@ -231,13 +235,13 @@ func build_ui():
 	root.add_child(cross)
 	var actions := HBoxContainer.new()
 	actions.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	actions.position = Vector2(-490,-90)
-	actions.size = Vector2(470,65)
+	actions.position = Vector2(-580,-90)
+	actions.size = Vector2(560,65)
 	root.add_child(actions)
-	for data in [["Soco","soco"],["Lança","lanca"],["Onda","onda"],["Guarda","guarda"]]:
+	for data in [["Soco","soco"],["Lança","lanca"],["Onda","onda"],["Guarda","guarda"],["Esquiva","esquiva"]]:
 		var b := Button.new()
 		b.text = data[0]
-		b.custom_minimum_size = Vector2(105,60)
+		b.custom_minimum_size = Vector2(100,60)
 		b.pressed.connect(cast.bind(data[1]))
 		actions.add_child(b)
 	menu = ColorRect.new()
@@ -252,7 +256,7 @@ func build_ui():
 	title.add_theme_font_size_override("font_size",42)
 	column.add_child(title)
 	var desc := Label.new()
-	desc.text = "Um guerreiro de Iqaluit. Um braço moldado em gelo.\nAbra a passagem e alcance o abrigo.\n\nWASD · mouse · clique: lança · Q: soco · E: onda · R: guarda\nCelular: arraste à esquerda para andar, à direita para olhar."
+	desc.text = "Um guerreiro de Iqaluit. Um braço moldado em gelo.\nAbra a passagem e alcance o abrigo.\n\nWASD · mouse · clique: lança · Q: soco · E: onda · R: guarda · Shift: esquiva\nCelular: arraste à esquerda para andar, à direita para olhar."
 	column.add_child(desc)
 	var start := Button.new()
 	start.text = "ATRAVESSAR A MARÉ"
@@ -274,6 +278,7 @@ func _input(event):
 			KEY_Q: cast("soco")
 			KEY_E: cast("onda")
 			KEY_R: cast("guarda")
+			KEY_SHIFT: cast("esquiva")
 			KEY_ESCAPE:
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 				active = false
@@ -297,6 +302,14 @@ func look(delta: Vector2):
 	camera.rotation.x = clamp(camera.rotation.x-delta.y*0.003,-1.25,1.25)
 func cast(power: String):
 	if not active or won: return
+	if power == "esquiva":
+		if dodge_cooldown > 0 or focus < 15: return
+		focus -= 15
+		dodge_cooldown = 1.5
+		dodge_time = 0.25
+		dodge_direction = player.velocity.normalized() if player.velocity.length() > 0.5 else -player.global_basis.z
+		dodge_direction.y = 0
+		return
 	if power == "soco":
 		if melee_cooldown > 0: return
 		melee_cooldown = 0.55
@@ -343,6 +356,8 @@ func _physics_process(dt):
 	arm.position.z = -0.85-0.3*sin(attack_pose/0.3*PI)
 	focus = min(100.0,focus+dt*7)
 	guard = max(0.0,guard-dt)
+	dodge_time = max(0.0,dodge_time-dt)
+	dodge_cooldown = max(0.0,dodge_cooldown-dt)
 	for key in cooldowns: cooldowns[key] = max(0.0,cooldowns[key]-dt)
 	var input := move_touch
 	if Input.is_physical_key_pressed(KEY_A): input.x -= 1
@@ -352,6 +367,9 @@ func _physics_process(dt):
 	var direction := player.global_basis*Vector3(input.x,0,input.y).limit_length()
 	player.velocity.x = direction.x*6
 	player.velocity.z = direction.z*6
+	if dodge_time > 0:
+		player.velocity.x = dodge_direction.x*16
+		player.velocity.z = dodge_direction.z*16
 	player.velocity.y -= dt*18
 	player.move_and_slide()
 	arm.rotation.z = sin(elapsed*8)*0.035*input.length()
@@ -373,9 +391,13 @@ func _physics_process(dt):
 			if e.timer < 0.6:
 				e.node.scale = Vector3.ONE*(1.0+sin(elapsed*25)*0.08)
 			if e.timer <= 0:
-				if offset.length() < 3:
+				if offset.length() < 3 and dodge_time <= 0:
 					health -= Rules.damage_after_guard(14,guard > 0 and (-offset.normalized()).dot(-player.global_basis.z) > 0.3)
 					pulse(player.position,0.25)
+				if e.kind == 2 and offset.length() > 3:
+					var from: Vector3 = e.node.position+Vector3.UP
+					var shot := sphere(self,from,0.13,amber)
+					hostile_bolts.append({"node":shot,"velocity":(camera.global_position-from).normalized()*11,"life":4.0})
 				e.timer = 2.0
 				e.node.scale = Vector3.ONE
 	for i in range(bolts.size()-1,-1,-1):
@@ -401,6 +423,26 @@ func _physics_process(dt):
 		if b.life <= 0:
 			b.node.queue_free()
 			bolts.remove_at(i)
+	for i in range(hostile_bolts.size()-1,-1,-1):
+		var b = hostile_bolts[i]
+		var from: Vector3 = b.node.position
+		var to: Vector3 = from+b.velocity*dt
+		b.node.position = to
+		b.life -= dt
+		var query := PhysicsRayQueryParameters3D.create(from,to)
+		var exclude: Array[RID] = []
+		for e in enemies: exclude.append(e.node.get_rid())
+		query.exclude = exclude
+		var hit := get_world_3d().direct_space_state.intersect_ray(query)
+		if not hit.is_empty():
+			if hit.collider == player and dodge_time <= 0:
+				var front: bool = (-b.velocity.normalized()).dot(-player.global_basis.z) > 0.3
+				health -= Rules.damage_after_guard(18,guard > 0 and front)
+			b.life = 0
+			pulse(hit.position,0.18)
+		if b.life <= 0:
+			b.node.queue_free()
+			hostile_bolts.remove_at(i)
 	for i in range(effects.size()-1,-1,-1):
 		effects[i].life -= dt
 		if effects[i].life <= 0:
