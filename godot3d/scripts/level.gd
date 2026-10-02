@@ -334,6 +334,7 @@ func _activate_beacon(beacon:Dictionary):
 		return
 	beacon.active = true
 	active_count += 1
+	_shift_weather(active_count)
 	var root:Node3D = beacon.node
 	for child in root.get_children():
 		if child is MeshInstance3D:
@@ -368,3 +369,22 @@ func _on_enemy_died(_enemy, kind:String):
 		emit_signal("area_changed", "MARGEM DE IQALUIT · SILÊNCIO")
 		emit_signal("objective_changed", "A Fenda Azul estabilizou. Vertical slice concluída.")
 		emit_signal("completed")
+
+
+func _shift_weather(stage:int):
+	var world = get_tree().current_scene.get_node_or_null("WorldEnvironment")
+	if world == null or world.environment == null:
+		return
+	match stage:
+		1:
+			world.environment.fog_density = 0.014
+			world.environment.ambient_light_energy = 0.52
+			emit_signal("area_changed","MARGEM DE IQALUIT · O VENTO ACORDA")
+		2:
+			world.environment.fog_density = 0.019
+			world.environment.ambient_light_energy = 0.46
+			emit_signal("area_changed","FENDA AZUL · TEMPESTADE")
+		3:
+			world.environment.fog_density = 0.009
+			world.environment.ambient_light_energy = 0.61
+			emit_signal("area_changed","CÂMARA DO VENTO · AURORA ABERTA")
