@@ -77,7 +77,7 @@ jobs:
         run: |
           mkdir -p godot3d/build
           set -o pipefail
-          godot --headless --path godot3d --export-debug "Android APK" godot3d/build/Entre_Margens_Iqaluit_3D_Debug.apk 2>&1 | tee /tmp/godot-export.log
+          godot --headless --path godot3d --export-debug "Android APK" build/Entre_Margens_Iqaluit_3D_Debug.apk 2>&1 | tee /tmp/godot-export.log
           if grep -q "ERROR:" /tmp/godot-export.log; then exit 1; fi
           test -s godot3d/build/Entre_Margens_Iqaluit_3D_Debug.apk
 
