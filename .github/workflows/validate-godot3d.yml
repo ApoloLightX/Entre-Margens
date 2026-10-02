@@ -20,8 +20,6 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - uses: android-actions/setup-android@v3
-
       - uses: chickensoft-games/setup-godot@v2
         with:
           version: 4.5.1
