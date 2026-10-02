@@ -1,0 +1,54 @@
+newmtl ICE
+Kd 0.16 0.66 0.86
+Ks 0.85 0.95 1.00
+Ns 420
+illum 2
+
+newmtl ICE_DARK
+Kd 0.05 0.20 0.29
+Ks 0.45 0.68 0.76
+Ns 260
+illum 2
+
+newmtl CLOTH
+Kd 0.05 0.08 0.09
+Ks 0.05 0.06 0.06
+Ns 12
+illum 2
+
+newmtl FUR
+Kd 0.63 0.72 0.72
+Ks 0.08 0.10 0.10
+Ns 18
+illum 2
+
+newmtl METAL
+Kd 0.10 0.16 0.18
+Ks 0.75 0.78 0.80
+Ns 300
+illum 2
+
+newmtl ROCK
+Kd 0.08 0.12 0.14
+Ks 0.12 0.14 0.15
+Ns 22
+illum 2
+
+newmtl WARM
+Kd 0.88 0.43 0.12
+Ke 0.95 0.34 0.08
+Ks 0.70 0.45 0.20
+Ns 180
+illum 2
+
+newmtl WALL
+Kd 0.18 0.27 0.29
+Ks 0.10 0.14 0.15
+Ns 28
+illum 2
+
+newmtl SNOW
+Kd 0.68 0.78 0.82
+Ks 0.28 0.34 0.36
+Ns 55
+illum 2

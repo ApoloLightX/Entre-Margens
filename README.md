@@ -174,3 +174,13 @@ Ainda não considerar como concluído sem teste real:
 4. Depois continuar polimento de sprites, inimigos e cenário.
 
 Não inventar automaticamente NG+, arena infinita, área 7, terceiro final ou “v2.0” apenas porque há espaço para expansão. Qualquer expansão de conteúdo deve ser uma decisão explícita do projeto.
+
+## Experimento 3.0 — Guerreiro de Iqaluit 3D
+
+O ramo `work/3.0-iqaluit-icewarrior` contém uma vertical slice separada em `godot3d/`, criada após o playtest do protótipo HTML em 01/10/2026.
+
+Ela **não substitui automaticamente** a campanha 2D acima. Serve para avaliar uma nova direção: primeira pessoa em Godot 4.5.1, guerreiro de Iqaluit, braço de gelo no lugar de arma convencional, poderes novos e a fase semiaberta `Margem de Iqaluit · Fenda Azul`.
+
+Abra `godot3d/project.godot` para testar. Detalhes: `docs/24_IQALUIT_3D_VERTICAL_SLICE.md`.
+
+A PR experimental é mantida como draft até validação física no POCO F7.
