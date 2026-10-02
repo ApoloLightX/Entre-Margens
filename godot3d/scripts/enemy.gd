@@ -15,6 +15,9 @@ var frozen := 0.0
 var slow_factor := 1.0
 var slow_time := 0.0
 var ice_material:ShaderMaterial
+const HUSK_MESH = preload("res://assets/models/husk.obj")
+const SHARDLING_MESH = preload("res://assets/models/shardling.obj")
+const WARDEN_MESH = preload("res://assets/models/warden.obj")
 
 func setup(player:CharacterBody3D, enemy_kind:String):
 	target = player
@@ -42,65 +45,25 @@ func _ready():
 func _build_body():
 	var shape_node = CollisionShape3D.new()
 	var capsule = CapsuleShape3D.new()
-	capsule.radius = 0.43 if kind != "warden" else 0.72
-	capsule.height = 1.45 if kind != "warden" else 2.35
+	capsule.radius = 0.46 if kind != "warden" else 0.80
+	capsule.height = 1.55 if kind != "warden" else 2.55
 	shape_node.shape = capsule
-	shape_node.position.y = 0.7 if kind != "warden" else 1.15
+	shape_node.position.y = 0.78 if kind != "warden" else 1.28
 	add_child(shape_node)
 
-	var shell = StandardMaterial3D.new()
-	shell.albedo_color = Color("#172a31") if kind != "warden" else Color("#1a252b")
-	shell.roughness = 0.67
-	shell.metallic = 0.06
+	var model = MeshInstance3D.new()
+	model.name = "Authored_" + kind
+	model.mesh = WARDEN_MESH if kind == "warden" else (SHARDLING_MESH if kind == "shardling" else HUSK_MESH)
+	model.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	model.scale = Vector3.ONE * (1.0 if kind != "warden" else 1.08)
+	add_child(model)
 
-	var core_mat = StandardMaterial3D.new()
-	core_mat.albedo_color = Color("#6fe8f4") if kind != "warden" else Color("#f0b76c")
-	core_mat.emission_enabled = true
-	core_mat.emission = core_mat.albedo_color * 1.8
-	core_mat.roughness = 0.18
-
-	var torso = SphereMesh.new()
-	torso.radius = 0.46 if kind != "warden" else 0.76
-	torso.height = 0.92 if kind != "warden" else 1.52
-	torso.radial_segments = 10
-	torso.rings = 6
-	_part(torso, shell, Vector3(0, 0.85 if kind != "warden" else 1.3, 0), Vector3.ZERO, Vector3(1.0, 1.1, 0.82))
-
-	var core = SphereMesh.new()
-	core.radius = 0.15 if kind != "warden" else 0.26
-	core.height = core.radius * 2.0
-	core.radial_segments = 10
-	core.rings = 5
-	_part(core, core_mat, Vector3(0, 0.9 if kind != "warden" else 1.38, -0.38 if kind != "warden" else -0.63), Vector3.ZERO, Vector3.ONE)
-
-	var leg_count = 4 if kind != "warden" else 6
-	for i in range(leg_count):
-		var a = i * TAU / float(leg_count)
-		var leg = CylinderMesh.new()
-		leg.height = 0.78 if kind != "warden" else 1.05
-		leg.top_radius = 0.055
-		leg.bottom_radius = 0.085
-		leg.radial_segments = 6
-		_part(leg, shell, Vector3(cos(a)*0.43, 0.32, sin(a)*0.43), Vector3(18*cos(a), -rad_to_deg(a), 24*sin(a)), Vector3.ONE)
-
-	var shard_count = 5 if kind == "husk" else (8 if kind == "warden" else 3)
-	for i in range(shard_count):
-		var a = i * TAU / float(shard_count)
-		var shard = CylinderMesh.new()
-		shard.height = 0.54 + (i%3)*0.12
-		shard.top_radius = 0.0
-		shard.bottom_radius = 0.075 if kind != "warden" else 0.11
-		shard.radial_segments = 5
-		var r = 0.34 if kind != "warden" else 0.58
-		_part(shard, ice_material, Vector3(cos(a)*r, 1.15 if kind != "warden" else 1.78, sin(a)*r), Vector3(10*cos(a), -rad_to_deg(a), 28*sin(a)), Vector3.ONE)
-
-	if kind == "shardling":
-		var crown = CylinderMesh.new()
-		crown.height = 0.82
-		crown.top_radius = 0.0
-		crown.bottom_radius = 0.12
-		crown.radial_segments = 6
-		_part(crown, ice_material, Vector3(0, 1.55, 0), Vector3(0,0,0), Vector3.ONE)
+	var core_light = OmniLight3D.new()
+	core_light.light_color = Color("#ff9f4f") if kind == "warden" else Color("#6fdef2")
+	core_light.light_energy = 0.55 if kind == "warden" else 0.22
+	core_light.omni_range = 4.2 if kind == "warden" else 2.1
+	core_light.position = Vector3(0,1.55 if kind == "warden" else 0.92,-0.72 if kind == "warden" else -0.36)
+	add_child(core_light)
 
 func _part(mesh:Mesh, material:Material, pos:Vector3, rot_deg:Vector3, scale_value:Vector3):
 	var node = MeshInstance3D.new()
