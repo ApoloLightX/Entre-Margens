@@ -28,7 +28,10 @@ var hud
 
 var camera:Camera3D
 var arm_root:Node3D
-var arm_home := Vector3(0.48, -0.43, -0.78)
+var arm_visual:Node3D
+var arm_clock := 0.0
+var arm_home := Vector3(0.48, -0.43, -0.70)
+const ICE_ARM_MESH = preload("res://assets/models/ice_arm.obj")
 var ice_material:ShaderMaterial
 var dark_ice_material:StandardMaterial3D
 
@@ -60,52 +63,31 @@ func set_hud(value):
 func _build_ice_arm():
 	ice_material = ShaderMaterial.new()
 	ice_material.shader = load("res://shaders/ice.gdshader")
-	dark_ice_material = StandardMaterial3D.new()
-	dark_ice_material.albedo_color = Color("#102a35")
-	dark_ice_material.metallic = 0.34
-	dark_ice_material.roughness = 0.29
 
 	arm_root = Node3D.new()
-	arm_root.name = "IceArm"
+	arm_root.name = "IceArmRoot"
 	arm_root.position = arm_home
-	arm_root.rotation_degrees = Vector3(-8, -7, -5)
+	arm_root.rotation_degrees = Vector3(-6, -8, -4)
 	camera.add_child(arm_root)
 
-	var sleeve = CylinderMesh.new()
-	sleeve.height = 0.42
-	sleeve.top_radius = 0.145
-	sleeve.bottom_radius = 0.19
-	sleeve.radial_segments = 12
-	_add_arm_piece(sleeve, dark_ice_material, Vector3(0.02, 0.02, 0.13), Vector3(90, 0, 0), Vector3.ONE)
+	arm_visual = Node3D.new()
+	arm_visual.name = "IceArmVisual"
+	arm_root.add_child(arm_visual)
 
-	var forearm = CylinderMesh.new()
-	forearm.height = 0.62
-	forearm.top_radius = 0.115
-	forearm.bottom_radius = 0.165
-	forearm.radial_segments = 10
-	_add_arm_piece(forearm, ice_material, Vector3(0, -0.015, -0.28), Vector3(90, 0, 0), Vector3.ONE)
+	var model = MeshInstance3D.new()
+	model.name = "AuthoredIceArm"
+	model.mesh = ICE_ARM_MESH
+	model.scale = Vector3(0.88,0.88,0.88)
+	model.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	arm_visual.add_child(model)
 
-	var fist = SphereMesh.new()
-	fist.radius = 0.17
-	fist.height = 0.32
-	fist.radial_segments = 12
-	fist.rings = 6
-	_add_arm_piece(fist, ice_material, Vector3(0, 0.0, -0.62), Vector3.ZERO, Vector3(1.1, 0.88, 1.25))
-
-	for i in range(5):
-		var shard = CylinderMesh.new()
-		shard.height = 0.28 + i * 0.025
-		shard.top_radius = 0.0
-		shard.bottom_radius = 0.038 + i * 0.004
-		shard.radial_segments = 6
-		var x = -0.115 + i * 0.058
-		var y = 0.06 + abs(2-i) * 0.018
-		_add_arm_piece(shard, ice_material, Vector3(x, y, -0.72), Vector3(76, 0, -18 + i * 9), Vector3.ONE)
-
-	for i in range(4):
-		var plate = BoxMesh.new()
-		plate.size = Vector3(0.055, 0.20, 0.12)
-		_add_arm_piece(plate, ice_material, Vector3(-0.13 + i * 0.085, 0.095, -0.34 - i * 0.045), Vector3(-15, 0, -18 + i * 10), Vector3.ONE)
+	var arm_light = OmniLight3D.new()
+	arm_light.name = "IceArmBounce"
+	arm_light.light_color = Color("#7fdff5")
+	arm_light.light_energy = 0.32
+	arm_light.omni_range = 2.1
+	arm_light.position = Vector3(0.0,0.04,-0.62)
+	arm_visual.add_child(arm_light)
 
 func _add_arm_piece(mesh:Mesh, material:Material, pos:Vector3, rot_deg:Vector3, scale_value:Vector3):
 	var node = MeshInstance3D.new()
@@ -118,6 +100,12 @@ func _add_arm_piece(mesh:Mesh, material:Material, pos:Vector3, rot_deg:Vector3, 
 	arm_root.add_child(node)
 
 func _physics_process(delta):
+	arm_clock += delta
+	if arm_visual != null and dash_time <= 0.0:
+		var planar_speed = Vector2(velocity.x, velocity.z).length()
+		var step = sin(arm_clock * (8.0 + planar_speed * 0.45)) * minf(1.0, planar_speed / SPEED)
+		arm_visual.position = Vector3(step * 0.012, -abs(step) * 0.010 + sin(arm_clock*1.7)*0.006, 0)
+		arm_visual.rotation_degrees = Vector3(step*0.55, 0, -step*0.75)
 	attack_cd = maxf(0.0, attack_cd - delta)
 	spear_cd = maxf(0.0, spear_cd - delta)
 	wall_cd = maxf(0.0, wall_cd - delta)
