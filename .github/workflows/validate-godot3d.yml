@@ -27,6 +27,7 @@ jobs:
         with:
           version: 4.5.1
           use-dotnet: false
+          include-templates: true
 
       - name: Install Android SDK packages
         shell: bash
@@ -35,15 +36,6 @@ jobs:
           test -x "$SDKMANAGER"
           yes | "$SDKMANAGER" --licenses >/dev/null || true
           "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0" "platform-tools"
-
-      - name: Install Godot 4.5.1 export templates
-        shell: bash
-        run: |
-          mkdir -p "$HOME/.local/share/godot/export_templates/4.5.1.stable"
-          curl -L --fail --retry 3             "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_export_templates.tpz"             -o /tmp/templates.tpz
-          mkdir -p /tmp/godot-templates
-          unzip -q /tmp/templates.tpz -d /tmp/godot-templates
-          cp -R /tmp/godot-templates/templates/. "$HOME/.local/share/godot/export_templates/4.5.1.stable/"
 
       - name: Configure Godot Android paths
         shell: bash
