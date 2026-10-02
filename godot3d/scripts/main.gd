@@ -5,10 +5,12 @@ extends Node3D
 const PLAYER = preload("res://scripts/player.gd")
 const LEVEL = preload("res://scripts/level.gd")
 const HUD = preload("res://scripts/hud.gd")
+const WORLD_VFX = preload("res://scripts/world_vfx.gd")
 
 var player:CharacterBody3D
 var level:Node3D
 var hud:Control
+var ambience:Node3D
 
 func _ready():
 	_setup_environment()
@@ -29,8 +31,14 @@ func _ready():
 	hud.bind(player, level)
 	player.set_hud(hud)
 
+	ambience = WORLD_VFX.new()
+	ambience.name = "AtmosphereVFX"
+	add_child(ambience)
+	ambience.setup(player)
+
 func _setup_environment():
 	var world = WorldEnvironment.new()
+	world.name = "WorldEnvironment"
 	var env = Environment.new()
 	env.background_mode = Environment.BG_SKY
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
@@ -42,6 +50,11 @@ func _setup_environment():
 	env.fog_light_energy = 0.42
 	env.fog_density = 0.011
 	env.fog_sky_affect = 0.34
+	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	env.tonemap_exposure = 1.08
+	env.adjustment_enabled = true
+	env.adjustment_contrast = 1.08
+	env.adjustment_saturation = 0.94
 
 	var sky = Sky.new()
 	var sky_mat = ProceduralSkyMaterial.new()
