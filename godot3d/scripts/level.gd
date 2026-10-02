@@ -7,6 +7,8 @@ signal area_changed(text:String)
 signal completed
 
 const ENEMY = preload("res://scripts/enemy.gd")
+const SHELTER_MESH = preload("res://assets/models/shelter.obj")
+const BEACON_MESH = preload("res://assets/models/beacon.obj")
 
 var player:CharacterBody3D
 var beacons:Array = []
@@ -159,52 +161,46 @@ func _beacon(pos:Vector3, label:String):
 	root.name = label
 	root.position = pos
 	add_child(root)
-	var base = CylinderMesh.new()
-	base.height = 0.7
-	base.top_radius = 0.72
-	base.bottom_radius = 0.85
-	base.radial_segments = 10
-	_mesh(root,base,rock_material,Vector3(0,0.35,0),Vector3.ZERO,Vector3.ONE)
-	var spike = CylinderMesh.new()
-	spike.height = 2.4
-	spike.top_radius = 0.08
-	spike.bottom_radius = 0.30
-	spike.radial_segments = 8
-	_mesh(root,spike,metal_material,Vector3(0,1.65,0),Vector3.ZERO,Vector3.ONE)
-	var core = SphereMesh.new()
-	core.radius = 0.28
-	core.height = 0.56
-	core.radial_segments = 10
-	core.rings = 6
-	_mesh(root,core,warm_material,Vector3(0,2.95,0),Vector3.ZERO,Vector3.ONE)
+	var model = MeshInstance3D.new()
+	model.name = "AuthoredBeacon"
+	model.mesh = BEACON_MESH
+	model.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	root.add_child(model)
+	var glow = OmniLight3D.new()
+	glow.light_color = Color("#ffb462")
+	glow.light_energy = 0.62
+	glow.omni_range = 5.0
+	glow.position = Vector3(0,3.0,0)
+	root.add_child(glow)
 	beacons.append({"node":root,"pos":pos,"active":false,"label":label})
 
-func _shelter(pos:Vector3, wall_color:Color):
+func _shelter(pos:Vector3, _wall_color:Color):
 	var root = Node3D.new()
 	root.position = pos
 	add_child(root)
-	var wall = StandardMaterial3D.new()
-	wall.albedo_color = wall_color
-	wall.roughness = 0.74
-	_static_box(root,Vector3(0,1.15,0),Vector3(6.2,2.3,4.6),wall)
-	_static_box(root,Vector3(0,2.55,0),Vector3(6.7,0.38,5.1),snow_material)
-	for x in [-1.7,1.7]:
-		var window = BoxMesh.new()
-		window.size = Vector3(1.15,0.78,0.08)
-		_mesh(root,window,warm_material,Vector3(x,1.35,-2.34),Vector3.ZERO,Vector3.ONE)
-	var light = OmniLight3D.new()
-	light.light_color = Color("#ffb66c")
-	light.light_energy = 1.35
-	light.omni_range = 7.0
-	light.position = Vector3(0,1.7,-2.8)
-	root.add_child(light)
-	for x in [-2.35,2.35]:
-		var stilt = CylinderMesh.new()
-		stilt.height = 0.8
-		stilt.top_radius = 0.09
-		stilt.bottom_radius = 0.11
-		stilt.radial_segments = 6
-		_mesh(root,stilt,metal_material,Vector3(x,0.4,1.4),Vector3.ZERO,Vector3.ONE)
+	var model = MeshInstance3D.new()
+	model.name = "AuthoredShelter"
+	model.mesh = SHELTER_MESH
+	model.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	root.add_child(model)
+
+	var body = StaticBody3D.new()
+	body.collision_layer = 1
+	body.collision_mask = 2
+	body.position = Vector3(0,1.25,0)
+	root.add_child(body)
+	var col = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(6.3,2.5,4.55)
+	col.shape = shape
+	body.add_child(col)
+
+	var warm = OmniLight3D.new()
+	warm.light_color = Color("#ffad5f")
+	warm.light_energy = 1.65
+	warm.omni_range = 8.0
+	warm.position = Vector3(0,1.65,-2.7)
+	root.add_child(warm)
 
 func _watch_post(pos:Vector3):
 	var root = Node3D.new()
