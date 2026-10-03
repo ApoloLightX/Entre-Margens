@@ -1,0 +1,44 @@
+[
+  {
+    "file": "snow_02_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/snow_02/snow_02_diff_1k.jpg",
+    "bytes": 325497,
+    "license": "CC0",
+    "source": "https://polyhaven.com/a/snow_02"
+  },
+  {
+    "file": "snow_02_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/snow_02/snow_02_nor_gl_1k.jpg",
+    "bytes": 1081858,
+    "license": "CC0",
+    "source": "https://polyhaven.com/a/snow_02"
+  },
+  {
+    "file": "snow_02_rough_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/snow_02/snow_02_rough_1k.jpg",
+    "bytes": 146089,
+    "license": "CC0",
+    "source": "https://polyhaven.com/a/snow_02"
+  },
+  {
+    "file": "rock_boulder_dry_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_diff_1k.jpg",
+    "bytes": 859211,
+    "license": "CC0",
+    "source": "https://polyhaven.com/a/rock_boulder_dry"
+  },
+  {
+    "file": "rock_boulder_dry_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_nor_gl_1k.jpg",
+    "bytes": 802497,
+    "license": "CC0",
+    "source": "https://polyhaven.com/a/rock_boulder_dry"
+  },
+  {
+    "file": "rock_boulder_dry_rough_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_rough_1k.jpg",
+    "bytes": 668127,
+    "license": "CC0",
+    "source": "https://polyhaven.com/a/rock_boulder_dry"
+  }
+]
