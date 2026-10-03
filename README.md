@@ -26,3 +26,7 @@ Não há conexão, anúncios ou compras obrigatórias. O conteúdo preserva os l
 ## Manutenção
 
 Mudanças importantes devem atualizar a documentação, os testes e a skill em .codex/skills/entre-margens-maintenance/SKILL.md. Skills externas devem ser avaliadas antes de entrar no runtime. Consulte LICENCAS.md antes de redistribuir qualquer asset.
+
+## Protótipo nativo 3D: Passo da Maré Fria
+
+O projeto independente [native-3d](native-3d/README.md) usa Godot 4.5.1 em primeira pessoa, com guerreiro de Iqaluit, braço de gelo e nova passagem costeira. Abra `native-3d/project.godot`. Está em desenvolvimento e ainda não atinge o acabamento da referência visual. A campanha 2D e seus saves continuam em `godot/`.
