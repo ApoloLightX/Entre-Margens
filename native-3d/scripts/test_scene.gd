@@ -37,6 +37,22 @@ func _physics_process(_dt):
 		game.enemies[2].timer = 0.01
 	if frames == 10:
 		assert(game.hostile_bolts.size() == 1)
+		var move := InputEventScreenTouch.new()
+		move.index = 0
+		move.position = Vector2(50,400)
+		move.pressed = true
+		game._input(move)
+		var attack := InputEventScreenTouch.new()
+		attack.index = 1
+		attack.position = game.touch_actions[0].button.get_global_rect().get_center()
+		attack.pressed = true
+		game.melee_cooldown = 0
+		game._input(attack)
+		assert(game.move_finger == 0)
+		assert(game.melee_cooldown > 0)
+		move.pressed = false
+		game._input(move)
+		assert(game.move_finger == -1)
 	if frames == 120:
 		assert(game.player.is_on_floor())
 		assert(game.player.position.y > 0)

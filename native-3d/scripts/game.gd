@@ -5,6 +5,7 @@ var camera: Camera3D
 var arm: Node3D
 var hud: Label
 var menu: Control
+var touch_actions: Array[Dictionary] = []
 var focus := 100.0
 var health := 100.0
 var active := false
@@ -242,8 +243,9 @@ func build_ui():
 		var b := Button.new()
 		b.text = data[0]
 		b.custom_minimum_size = Vector2(100,60)
-		b.pressed.connect(cast.bind(data[1]))
+		b.pressed.connect(action_button.bind(data[1]))
 		actions.add_child(b)
+		touch_actions.append({"button":b,"power":data[1]})
 	menu = ColorRect.new()
 	menu.color = Color(0.025,0.065,0.1,0.88)
 	menu.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -285,6 +287,11 @@ func _input(event):
 				menu.show()
 	if event is InputEventScreenTouch:
 		if event.pressed:
+			for action in touch_actions:
+				if action.button.get_global_rect().has_point(event.position):
+					cast(action.power)
+					get_viewport().set_input_as_handled()
+					return
 			if event.position.x < get_viewport().get_visible_rect().size.x * 0.4:
 				move_finger = event.index
 				touch_origin = event.position
@@ -487,3 +494,8 @@ func sound(frequency: float, duration: float):
 	add_child(audio)
 	audio.finished.connect(audio.queue_free)
 	audio.play()
+
+func action_button(power: String):
+	# Native touch actions are handled per finger, without a second mouse-emulated cast.
+	if OS.get_name() not in ["Android", "iOS"]:
+		cast(power)
